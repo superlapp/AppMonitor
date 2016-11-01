@@ -7,17 +7,40 @@ using System.Threading.Tasks;
 
 namespace AppMonitorWindowsService
 {
-    class AppMonitor
+    sealed class AppMonitor
     {
-        ProcessHelper ph;
-        Process currentProcess = null;
-        Process activeProcess = null;
+        private static AppMonitor _me = null;
+
+        private ProcessHelper ph;
+        private Process currentProcess = null;
+        private Process activeProcess = null;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public AppMonitor()
+        public static AppMonitor Instance
         {
-            ph = new ProcessHelper();
+            get
+            {
+                if (_me == null) { _me = new AppMonitor(); }
+                return _me;
+            }
+        }
+        
+        private AppMonitor()
+        {
+            //
+        }
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        public void ApplicationFound()
+        {
+
+        }
+
+        public void ApplicationIsLost()
+        {
+
         }
     }
 }

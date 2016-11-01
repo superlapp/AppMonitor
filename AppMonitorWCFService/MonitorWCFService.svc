@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="AppMonitorWCFService.Service1" CodeBehind="MonitorWCFService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AppMonitorWCFService.MonitorWCFService" CodeBehind="MonitorWCFService.svc.cs" %>
