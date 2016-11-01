@@ -16,11 +16,11 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         public string GetStatus()
         {
-            IncomingRequest ir = new IncomingRequest();
-            ir.Request = "GetStatus";
-            ir.TimeOfReceiving = DateTime.Now;
-            db.IncomingRequests.Add(ir);
-            db.SaveChanges();
+            //IncomingRequest ir = new IncomingRequest();
+            //ir.Request = "GetStatus";
+            //ir.TimeOfReceiving = DateTime.Now;
+            //db.IncomingRequests.Add(ir);
+            //db.SaveChanges();
             //
             return "Service is running";
         }

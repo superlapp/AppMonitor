@@ -20,9 +20,35 @@ namespace AppMonitorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        AppMonitorWPF.localhost.MonitorWCFService srv;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void connectToWCFBtn_Click(object sender, RoutedEventArgs e)
+        {
+            srv = new AppMonitorWPF.localhost.MonitorWCFService();
+            connectToWCFBtn.Content = "Connected";
+            connectToWCFBtn.IsEnabled = false;
+        }
+
+        private void getResultBtn_Click(object sender, RoutedEventArgs e)
+        {
+            resultLabel.Content = srv.GetStatus() + " at " + DateTime.Now.ToString();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            requestsListBox.Items.Clear();
+            //
+            string[] rq = srv.GetRequests();
+            //
+            foreach (string r in rq)
+            {
+                requestsListBox.Items.Add(r);
+            }
         }
     }
 }
