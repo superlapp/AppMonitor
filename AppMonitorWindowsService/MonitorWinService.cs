@@ -10,19 +10,21 @@ using System.Threading.Tasks;
 
 namespace AppMonitorWindowsService
 {
-    public partial class Service1 : ServiceBase
+    public partial class MonitorWinService : ServiceBase
     {
-        public Service1()
+        public MonitorWinService()
         {
             InitializeComponent();
         }
 
         protected override void OnStart(string[] args)
         {
+            //
         }
 
         protected override void OnStop()
         {
+            //
         }
     }
 }

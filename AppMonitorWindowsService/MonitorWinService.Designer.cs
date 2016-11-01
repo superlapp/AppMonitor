@@ -1,6 +1,6 @@
 ﻿namespace AppMonitorWindowsService
 {
-    partial class Service1
+    partial class MonitorWinService
     {
         /// <summary> 
         /// Required designer variable.
