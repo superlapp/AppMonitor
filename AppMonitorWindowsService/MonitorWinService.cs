@@ -13,7 +13,7 @@ namespace AppMonitorWindowsService
 {
     public partial class MonitorWinService : ServiceBase
     {
-        ProcessHelper ph;
+        AppMonitor am;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -24,7 +24,7 @@ namespace AppMonitorWindowsService
 
         protected override void OnStart(string[] args)
         {
-            ph = new ProcessHelper();
+            am = new AppMonitor();
             //
             timer1.Start();
         }
