@@ -53,7 +53,7 @@
     <Compile Include="MonitorWinService.Designer.cs">
       <DependentUpon>MonitorWinService.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProcessHelper.cs" />
+    <Compile Include="ApplicationHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

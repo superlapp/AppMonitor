@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AppMonitorWindowsService
 {
-    class ProcessHelper
+    class ApplicationHelper
     {
         [DllImport("user32.dll")]
         private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);

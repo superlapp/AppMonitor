@@ -24,7 +24,7 @@ namespace AppMonitorWindowsService
 
         protected override void OnStart(string[] args)
         {
-            am = new AppMonitor();
+            am = AppMonitor.Instance;
             //
             timer1.Start();
         }

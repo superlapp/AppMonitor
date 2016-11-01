@@ -11,7 +11,7 @@ namespace AppMonitorWindowsService
     {
         private static AppMonitor _me = null;
 
-        private ProcessHelper ph;
+        private ApplicationHelper ah;
         private Process currentProcess = null;
         private Process activeProcess = null;
         //---------------------------------------------------------------------
