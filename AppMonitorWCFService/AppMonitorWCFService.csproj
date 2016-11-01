@@ -41,7 +41,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -61,23 +71,66 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\wcf_db.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\wcf_db_log.ldf">
+      <DependentUpon>wcf_db.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonitorWCFService.svc" />
+    <Content Include="wcf_dbModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>wcf_dbModel.Context.cs</LastGenOutput>
+      <DependentUpon>wcf_dbModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="wcf_dbModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>wcf_dbModel.edmx</DependentUpon>
+      <LastGenOutput>wcf_dbModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IncomingRequest.cs">
+      <DependentUpon>wcf_dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MonitorWCFService.svc.cs">
       <DependentUpon>MonitorWCFService.svc</DependentUpon>
     </Compile>
     <Compile Include="IMonitorWCFService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="wcf_dbModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>wcf_dbModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="wcf_dbModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>wcf_dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="wcf_dbModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>wcf_dbModel.edmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <EntityDeploy Include="wcf_dbModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>wcf_dbModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="wcf_dbModel.edmx.diagram">
+      <DependentUpon>wcf_dbModel.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

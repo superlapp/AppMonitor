@@ -10,9 +10,28 @@ namespace AppMonitorWCFService
 {
     public class MonitorWCFService : IMonitorWCFService
     {
+        wcf_dbEntities db = new wcf_dbEntities();
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         public string GetStatus()
         {
+            IncomingRequest ir = new IncomingRequest();
+            ir.Request = "GetStatus";
+            ir.TimeOfReceiving = DateTime.Now;
+            db.IncomingRequests.Add(ir);
+            db.SaveChanges();
+            //
             return "Service is running";
+        }
+
+        public List<string> GetRequests()
+        {
+            List<string> requests = new List<string>();
+            //
+            requests = db.IncomingRequests.Select(x => x.Request + " " + x.TimeOfReceiving.ToString()).ToList();
+            //
+            return requests;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

@@ -15,9 +15,21 @@ namespace AppMonitorWCFService
         string GetStatus();
 
         [OperationContract]
+        List<string> GetRequests();
+
+        [OperationContract]
         void ApplicationFound(string host, string user, string app, DateTime datetime);
 
         [OperationContract]
         void ApplicationIsLost(string host, string user, string app, DateTime datetime);
+
+        [OperationContract]
+        List<string> GetHosts();
+
+        [OperationContract]
+        List<string> GetUsers(string host);
+
+        [OperationContract]
+        List<string> GetApplications(string host, string users);
     }
 }
