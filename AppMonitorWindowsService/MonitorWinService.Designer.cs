@@ -28,10 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.components = new System.ComponentModel.Container();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 200;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // MonitorWinService
+            // 
+            this.ServiceName = "AppMonitorWindowsService";
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer timer1;
+
+
     }
 }

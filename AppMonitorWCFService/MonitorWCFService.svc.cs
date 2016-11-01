@@ -17,12 +17,12 @@ namespace AppMonitorWCFService
             return "Service is running";
         }
 
-        public void ApplicationFound(string host, string app, DateTime datetime)
+        public void ApplicationFound(string host, string user, string app, DateTime datetime)
         {
             //
         }
 
-        public void ApplicationIsLost(string host, string app, DateTime datetime)
+        public void ApplicationIsLost(string host, string user, string app, DateTime datetime)
         {
             //
         }
