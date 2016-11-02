@@ -16,13 +16,27 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         public string GetStatus()
         {
-            //IncomingRequest ir = new IncomingRequest();
-            //ir.Request = "GetStatus";
-            //ir.TimeOfReceiving = DateTime.Now;
-            //db.IncomingRequests.Add(ir);
-            //db.SaveChanges();
+            int save_result = -999;
+            string err_text1 = "";
+            string err_text2 = "";
+            try
+            {
+                IncomingRequest ir = new IncomingRequest();
+                ir.Request = "GetStatus";
+                ir.TimeOfReceiving = DateTime.Now;
+                db.IncomingRequests.Add(ir);
+                save_result = db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                err_text1 = (ex == null) ? "" : ex.Message;
+                err_text2 = (ex.InnerException == null) ? "" : ex.InnerException.Message;
+            }
             //
-            return "Service is running";
+            return "Service is running " +
+                err_text1.ToString() + "\r\n" +
+                err_text2.ToString() + "\r\n" +
+                save_result.ToString();
         }
 
         public List<string> GetRequests()
