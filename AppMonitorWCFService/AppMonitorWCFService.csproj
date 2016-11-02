@@ -123,7 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <EntityDeploy Include="wcf_dbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>wcf_dbModel.Designer.cs</LastGenOutput>
@@ -131,6 +130,7 @@
     <Content Include="wcf_dbModel.edmx.diagram">
       <DependentUpon>wcf_dbModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\work_iis.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
