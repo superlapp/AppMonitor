@@ -26,5 +26,6 @@ namespace AppMonitorWCFService
         }
     
         public virtual DbSet<IncomingRequest> IncomingRequests { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
     }
 }
