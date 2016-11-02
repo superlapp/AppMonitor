@@ -6,17 +6,31 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AppMonitorWindowsService.WCF_Services;
+using System.Runtime.InteropServices;
 
 namespace AppMonitorWindowsService
 {
-    sealed class AppMonitor : AppHelper
+    class AppMonitor
     {
-        private static AppMonitor _me = null;
-        //
-        private MonitorWCFService mon = new MonitorWCFService();
-        //private AppHelper ah = new AppHelper();
-        private AppHelper.AppInfo currentProcess;
-        private AppHelper.AppInfo activeProcess;
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
+        
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        IntPtr hwnd;
+        
+        public struct AppInfo
+        {
+            public int id;
+            public string AppTitle;
+            public string AppPath;
+        }
+        AppInfo ai;
+        //---------------------------------------------------------------------
+        private MonitorWCFService mon;
+        private AppInfo currentProcess; //= new AppInfo();
+        private AppInfo activeProcess;
         //
         private DateTime startTime = DateTime.Now;
         //
@@ -24,18 +38,29 @@ namespace AppMonitorWindowsService
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public static AppMonitor Instance
-        {
-            get
-            {
-                if (_me == null) { _me = new AppMonitor(); }
-                return _me;
-            }
-        }
-        
-        private AppMonitor()
+        public AppMonitor()
         {
             //
+        }
+
+        private AppInfo GetActiveAppInfo()
+        {
+            hwnd = GetForegroundWindow();
+            uint pid;
+            GetWindowThreadProcessId(hwnd, out pid);
+            Process p = Process.GetProcessById((int)pid);
+            //
+            ai = new AppInfo();
+            ai.id = p.Id;
+            ai.AppTitle = (p.Id == 0) ? "" : p.MainModule.FileVersionInfo.FileDescription;
+            ai.AppPath = (p.Id == 0) ? "" : p.MainModule.FileName;
+            //
+            if (ai.AppTitle.Trim() == "")
+            {
+                ai.AppTitle = p.ProcessName;
+            }
+            //
+            return ai;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -44,32 +69,36 @@ namespace AppMonitorWindowsService
         {
             try
             {
+                mon = new MonitorWCFService();
+
                 work = true;
+
+                activeProcess = GetActiveAppInfo();
+
+                startTime = DateTime.Now;
+
+                ApplicationFound(activeProcess, startTime);
                 //
-                activeProcess = base.GetActiveAppInfo();
-                //startTime = DateTime.Now;
-                //
-                //ApplicationFound(activeProcess, startTime);
-                //currentProcess = activeProcess;
+                currentProcess = activeProcess;
                 //
                 while (work)
                 {
-                    ////if (currentProcess.id != activeProcess.id)
-                    ////{
-                    ////    ev.WriteEntry(currentProcess.AppTitle + " closed at " + DateTime.Now.ToString());
+                    if (currentProcess.id != activeProcess.id)
+                    {
+                        ApplicationIsLost(currentProcess, DateTime.Now);
+                        ApplicationFound(activeProcess, startTime);
 
-                    ////    ev.WriteEntry(activeProcess.AppTitle + " found at " + DateTime.Now.ToString());
-
-                    ////    //ApplicationIsLost(currentProcess, DateTime.Now);
-                    ////    //ApplicationFound(activeProcess, startTime);
-
-                    ////    currentProcess = activeProcess;
-                    ////}
+                        currentProcess = activeProcess;
+                    }
                     Thread.Sleep(200);
+
+                    work = false;
                 }
             }
             catch (Exception ex)
             {
+                work = false;
+                mon.Dispose();
                 ev.WriteEntry(ex.Message + "!");
             }
         }
@@ -77,18 +106,17 @@ namespace AppMonitorWindowsService
         public void StopMonitoring()
         {
             work = false;
+            mon.Dispose();
+        }
+        //---------------------------------------------------------------------
+        private void ApplicationFound(AppInfo ai, DateTime dt)
+        {
+            //mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
 
-        private void ApplicationFound(AppHelper.AppInfo ai, DateTime dt)
+        private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
-            startTime = DateTime.Now;
-            //
-            mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
-        }
-
-        private void ApplicationIsLost(AppHelper.AppInfo ai, DateTime dt)
-        {
-            mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            //mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
     }
 }

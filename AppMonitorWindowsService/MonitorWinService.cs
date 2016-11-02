@@ -28,7 +28,7 @@ namespace AppMonitorWindowsService
             //
             try
             {
-                am = AppMonitor.Instance;
+                am = new AppMonitor();
                 am.StartMonitoring(eventLog1);
             }
             catch (Exception ex)
@@ -63,7 +63,6 @@ namespace AppMonitorWindowsService
                 {
                     EventLog.CreateEventSource("MonitorWinService", "MonitorWinService");
                 }
-                eventLog1.Source = "MonitorWinService";
                 eventLog1.WriteEntry(log);
             }
             catch { }
