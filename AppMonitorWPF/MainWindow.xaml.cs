@@ -50,5 +50,18 @@ namespace AppMonitorWPF
                 requestsListBox.Items.Add(r);
             }
         }
+
+        private void getTestsButton_Click(object sender, RoutedEventArgs e)
+        {
+            testsListBox.Items.Clear();
+            //
+            string[] tt = srv.GetTests();
+            //
+            foreach (string t in tt)
+            {
+                testsListBox.Items.Insert(0, t);
+
+            }
+        }
     }
 }

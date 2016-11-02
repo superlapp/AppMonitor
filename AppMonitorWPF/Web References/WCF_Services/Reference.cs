@@ -43,6 +43,8 @@ namespace AppMonitorWPF.WCF_Services {
         
         private System.Threading.SendOrPostCallback GetApplicationsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetTestsOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -101,6 +103,9 @@ namespace AppMonitorWPF.WCF_Services {
         
         /// <remarks/>
         public event GetApplicationsCompletedEventHandler GetApplicationsCompleted;
+        
+        /// <remarks/>
+        public event GetTestsCompletedEventHandler GetTestsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetStatus", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -325,6 +330,35 @@ namespace AppMonitorWPF.WCF_Services {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetTests", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
+        public string[] GetTests() {
+            object[] results = this.Invoke("GetTests", new object[0]);
+            return ((string[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetTestsAsync() {
+            this.GetTestsAsync(null);
+        }
+        
+        /// <remarks/>
+        public void GetTestsAsync(object userState) {
+            if ((this.GetTestsOperationCompleted == null)) {
+                this.GetTestsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetTestsOperationCompleted);
+            }
+            this.InvokeAsync("GetTests", new object[0], this.GetTestsOperationCompleted, userState);
+        }
+        
+        private void OnGetTestsOperationCompleted(object arg) {
+            if ((this.GetTestsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetTestsCompleted(this, new GetTestsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -468,6 +502,32 @@ namespace AppMonitorWPF.WCF_Services {
         private object[] results;
         
         internal GetApplicationsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    public delegate void GetTestsCompletedEventHandler(object sender, GetTestsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetTestsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetTestsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

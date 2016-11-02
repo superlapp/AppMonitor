@@ -31,5 +31,8 @@ namespace AppMonitorWCFService
 
         [OperationContract]
         List<string> GetApplications(string host, string users);
+
+        [OperationContract]
+        List<string> GetTests();
     }
 }
