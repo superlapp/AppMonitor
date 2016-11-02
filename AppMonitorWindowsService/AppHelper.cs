@@ -28,7 +28,7 @@ namespace AppMonitorWindowsService
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public AppInfo GetActiveAppInfo()
+        protected AppInfo GetActiveAppInfo()
         {
             hwnd = GetForegroundWindow();
             uint pid;

@@ -9,12 +9,12 @@ using AppMonitorWindowsService.WCF_Services;
 
 namespace AppMonitorWindowsService
 {
-    sealed class AppMonitor
+    sealed class AppMonitor : AppHelper
     {
         private static AppMonitor _me = null;
         //
         private MonitorWCFService mon = new MonitorWCFService();
-        private AppHelper ah = new AppHelper();
+        //private AppHelper ah = new AppHelper();
         private AppHelper.AppInfo currentProcess;
         private AppHelper.AppInfo activeProcess;
         //
@@ -44,7 +44,7 @@ namespace AppMonitorWindowsService
         {
             work = true;
             //
-            activeProcess = ah.GetActiveAppInfo();
+            activeProcess = base.GetActiveAppInfo();
             startTime = DateTime.Now;
             //
             ApplicationFound(activeProcess, startTime);
