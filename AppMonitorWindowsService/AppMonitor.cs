@@ -33,8 +33,6 @@ namespace AppMonitorWindowsService
         private AppInfo activeProcess;
         //
         private DateTime startTime = DateTime.Now;
-        //
-        bool work = false;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -65,58 +63,40 @@ namespace AppMonitorWindowsService
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public void StartMonitoring(EventLog ev)
+        public void StartMonitoring()
         {
-            try
+            mon = new MonitorWCFService();
+            activeProcess = GetActiveAppInfo();
+            startTime = DateTime.Now;
+            ApplicationFound(activeProcess, startTime);
+            //
+            currentProcess = activeProcess;
+        }
+
+        public void Monitoring()
+        {
+            if (currentProcess.id != activeProcess.id)
             {
-                mon = new MonitorWCFService();
-
-                work = true;
-
-                activeProcess = GetActiveAppInfo();
-
-                startTime = DateTime.Now;
-
+                ApplicationIsLost(currentProcess, DateTime.Now);
                 ApplicationFound(activeProcess, startTime);
                 //
                 currentProcess = activeProcess;
-                //
-                while (work)
-                {
-                    if (currentProcess.id != activeProcess.id)
-                    {
-                        ApplicationIsLost(currentProcess, DateTime.Now);
-                        ApplicationFound(activeProcess, startTime);
-
-                        currentProcess = activeProcess;
-                    }
-                    Thread.Sleep(200);
-
-                    work = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                work = false;
-                mon.Dispose();
-                ev.WriteEntry(ex.Message + "!");
             }
         }
 
         public void StopMonitoring()
         {
-            work = false;
             mon.Dispose();
         }
         //---------------------------------------------------------------------
         private void ApplicationFound(AppInfo ai, DateTime dt)
         {
-            //mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
 
         private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
-            //mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
     }
 }

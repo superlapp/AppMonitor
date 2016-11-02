@@ -24,24 +24,14 @@ namespace AppMonitorWindowsService
 
         protected override void OnStart(string[] args)
         {
-            AddLog("Service started");
-            //
-            try
-            {
-                am = new AppMonitor();
-                am.StartMonitoring(eventLog1);
-            }
-            catch (Exception ex)
-            {
-                AddLog(ex.Message);
-            }
+            am = new AppMonitor();
+            am.StartMonitoring();
+            timer1.Start();
         }
 
         protected override void OnPause()
         {
             //am.StopMonitoring();
-
-            AddLog("Service paused");
         }
 
         protected override void OnContinue()
@@ -52,20 +42,11 @@ namespace AppMonitorWindowsService
         protected override void OnStop()
         {
             //am.StopMonitoring();
-            AddLog("Service stopped");
         }
 
-        public void AddLog(string log)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            try
-            {
-                if (!EventLog.SourceExists("MonitorWinService"))
-                {
-                    EventLog.CreateEventSource("MonitorWinService", "MonitorWinService");
-                }
-                eventLog1.WriteEntry(log);
-            }
-            catch { }
+            am.Monitoring();
         }
     }
 }

@@ -28,13 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.eventLog1 = new System.Diagnostics.EventLog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             // 
             // eventLog1
             // 
             this.eventLog1.Log = "Application";
             this.eventLog1.Source = "MonitorWinService";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 200;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MonitorWinService
             // 
@@ -46,6 +53,7 @@
         #endregion
 
         private System.Diagnostics.EventLog eventLog1;
+        private System.Windows.Forms.Timer timer1;
 
 
 
