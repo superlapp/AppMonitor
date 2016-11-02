@@ -2,8 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AppMonitorWPF.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AppMonitorWPF_localhost_MonitorWCFService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost/MonitorWCFService/MonitorWCFService.svc</Value>
+    <Setting Name="AppMonitorWPF_WCF_Services_MonitorWCFService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/AppMonitor/MonitorWCFService.svc</Value>
     </Setting>
   </Settings>
 </SettingsFile>

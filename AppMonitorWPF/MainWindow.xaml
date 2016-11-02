@@ -7,7 +7,7 @@
         <Button x:Name="getResultBtn" Content="Get result" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120" Height="24" Click="getResultBtn_Click"/>
         <Button x:Name="button" Content="Get requests" HorizontalAlignment="Left" Margin="135,39,0,0" VerticalAlignment="Top" Width="120" Height="24" Click="button_Click"/>
         <ListBox x:Name="requestsListBox" HorizontalAlignment="Left" Height="206" Margin="135,68,0,0" VerticalAlignment="Top" Width="501"/>
-        <Label x:Name="resultLabel" Content="Label" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.311,-0.142" Height="24"/>
+        <Label x:Name="resultLabel" Content="Label" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.311,-0.142" Height="24" Width="376"/>
 
     </Grid>
 </Window>

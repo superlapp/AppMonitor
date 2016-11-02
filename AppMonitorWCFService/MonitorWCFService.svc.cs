@@ -43,7 +43,12 @@ namespace AppMonitorWCFService
         {
             List<string> requests = new List<string>();
             //
-            requests = db.IncomingRequests.Select(x => x.Request + " " + x.TimeOfReceiving.ToString()).ToList();
+            foreach (IncomingRequest ir in db.IncomingRequests)
+            {
+                requests.Add(
+                    ir.Request + " at " +
+                    ir.TimeOfReceiving.ToString("dd.MM.yy hh:mm:ss"));
+            }
             //
             return requests;
         }

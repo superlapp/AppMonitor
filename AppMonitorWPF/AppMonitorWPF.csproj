@@ -58,7 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Web References\localhost\Reference.cs">
+    <Compile Include="Web References\WCF_Services\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -99,17 +99,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Web References\localhost\MonitorWCFService.wsdl" />
-    <None Include="Web References\localhost\MonitorWCFService.xsd">
+    <None Include="Web References\WCF_Services\MonitorWCFService.wsdl" />
+    <None Include="Web References\WCF_Services\MonitorWCFService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web References\localhost\MonitorWCFService0.xsd">
+    <None Include="Web References\WCF_Services\MonitorWCFService0.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web References\localhost\MonitorWCFService1.xsd">
+    <None Include="Web References\WCF_Services\MonitorWCFService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web References\localhost\Reference.map">
+    <None Include="Web References\WCF_Services\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -124,20 +124,20 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost/MonitorWCFService/MonitorWCFService.svc">
+    <WebReferenceUrl Include="http://localhost/AppMonitor/MonitorWCFService.svc">
       <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\localhost\</RelPath>
-      <UpdateFromURL>http://localhost/MonitorWCFService/MonitorWCFService.svc</UpdateFromURL>
+      <RelPath>Web References\WCF_Services\</RelPath>
+      <UpdateFromURL>http://localhost/AppMonitor/MonitorWCFService.svc</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>AppMonitorWPF_localhost_MonitorWCFService</CachedSettingsPropName>
+      <CachedSettingsPropName>AppMonitorWPF_WCF_Services_MonitorWCFService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web References\localhost\MonitorWCFService.disco" />
+    <None Include="Web References\WCF_Services\MonitorWCFService.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

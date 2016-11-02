@@ -20,7 +20,7 @@ namespace AppMonitorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        AppMonitorWPF.localhost.MonitorWCFService srv;
+        AppMonitorWPF.WCF_Services.MonitorWCFService srv;
 
         public MainWindow()
         {
@@ -29,7 +29,7 @@ namespace AppMonitorWPF
 
         private void connectToWCFBtn_Click(object sender, RoutedEventArgs e)
         {
-            srv = new AppMonitorWPF.localhost.MonitorWCFService();
+            srv = new AppMonitorWPF.WCF_Services.MonitorWCFService();
             connectToWCFBtn.Content = "Connected";
             connectToWCFBtn.IsEnabled = false;
         }
