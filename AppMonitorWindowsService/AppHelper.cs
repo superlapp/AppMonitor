@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AppMonitorWindowsService
 {
-    class ApplicationHelper
+    class AppHelper
     {
         [DllImport("user32.dll")]
         private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
@@ -18,24 +18,24 @@ namespace AppMonitorWindowsService
         //
         IntPtr hwnd;
         //
-        public struct ApplicationInfo
+        public struct AppInfo
         {
             public int id;
             public string AppTitle;
             public string AppPath;
         }
-        ApplicationInfo ai;
+        AppInfo ai;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public ApplicationInfo GetActiveAppInfo()
+        public AppInfo GetActiveAppInfo()
         {
             hwnd = GetForegroundWindow();
             uint pid;
             GetWindowThreadProcessId(hwnd, out pid);
             Process p = Process.GetProcessById((int)pid);
             //
-            ai = new ApplicationInfo();
+            ai = new AppInfo();
             ai.id = p.Id;
             ai.AppTitle = (p.Id == 0) ? "" : p.MainModule.FileVersionInfo.FileDescription;
             ai.AppPath = (p.Id == 0) ? "" : p.MainModule.FileName;

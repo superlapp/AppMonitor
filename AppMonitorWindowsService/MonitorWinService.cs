@@ -25,30 +25,22 @@ namespace AppMonitorWindowsService
         protected override void OnStart(string[] args)
         {
             am = AppMonitor.Instance;
-            //
-            timer1.Start();
+            am.StartMonitoring();
         }
 
         protected override void OnPause()
         {
-            timer1.Stop();
+            am.StopMonitoring();
         }
 
         protected override void OnContinue()
         {
-            timer1.Start();
+            am.StartMonitoring();
         }
 
         protected override void OnStop()
         {
-            timer1.Stop();
-        }
-        //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //
+            am.StopMonitoring();
         }
     }
 }
