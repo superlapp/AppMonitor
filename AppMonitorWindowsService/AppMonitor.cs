@@ -40,25 +40,37 @@ namespace AppMonitorWindowsService
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public void StartMonitoring()
+        public void StartMonitoring(EventLog ev)
         {
-            work = true;
-            //
-            activeProcess = base.GetActiveAppInfo();
-            startTime = DateTime.Now;
-            //
-            ApplicationFound(activeProcess, startTime);
-            currentProcess = activeProcess;
-            //
-            while (work)
+            try
             {
-                if (currentProcess.id != activeProcess.id)
+                work = true;
+                //
+                activeProcess = base.GetActiveAppInfo();
+                //startTime = DateTime.Now;
+                //
+                //ApplicationFound(activeProcess, startTime);
+                //currentProcess = activeProcess;
+                //
+                while (work)
                 {
-                    ApplicationIsLost(currentProcess, DateTime.Now);
-                    ApplicationFound(activeProcess, startTime);
-                    currentProcess = activeProcess;
+                    ////if (currentProcess.id != activeProcess.id)
+                    ////{
+                    ////    ev.WriteEntry(currentProcess.AppTitle + " closed at " + DateTime.Now.ToString());
+
+                    ////    ev.WriteEntry(activeProcess.AppTitle + " found at " + DateTime.Now.ToString());
+
+                    ////    //ApplicationIsLost(currentProcess, DateTime.Now);
+                    ////    //ApplicationFound(activeProcess, startTime);
+
+                    ////    currentProcess = activeProcess;
+                    ////}
+                    Thread.Sleep(200);
                 }
-                Thread.Sleep(200);
+            }
+            catch (Exception ex)
+            {
+                ev.WriteEntry(ex.Message + "!");
             }
         }
 

@@ -60,6 +60,7 @@ namespace AppMonitorWCFService
             Test t = new Test();
             t.MessageTxt = string.Format("F: {0};{1};{2};{3}", host, user, app, datetime.ToString("dd.MM.yy hh:mm:ss"));
             db.Tests.Add(t);
+            db.SaveChanges();
         }
 
         public void ApplicationIsLost(string host, string user, string app, DateTime datetime)
@@ -67,6 +68,7 @@ namespace AppMonitorWCFService
             Test t = new Test();
             t.MessageTxt = string.Format("L: {0};{1};{2};{3}", host, user, app, datetime.ToString("dd.MM.yy hh:mm:ss"));
             db.Tests.Add(t);
+            db.SaveChanges();
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

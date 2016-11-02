@@ -13,7 +13,7 @@ namespace AppMonitorWindowsService
 {
     public partial class MonitorWinService : ServiceBase
     {
-        //AppMonitor am;
+        AppMonitor am;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -24,10 +24,17 @@ namespace AppMonitorWindowsService
 
         protected override void OnStart(string[] args)
         {
-            //am = AppMonitor.Instance;
-            //am.StartMonitoring();
-
             AddLog("Service started");
+            //
+            try
+            {
+                am = AppMonitor.Instance;
+                am.StartMonitoring(eventLog1);
+            }
+            catch (Exception ex)
+            {
+                AddLog(ex.Message);
+            }
         }
 
         protected override void OnPause()
