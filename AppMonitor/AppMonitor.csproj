@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="AppHelper.cs" />
     <Compile Include="AppInfo.cs" />
-    <Compile Include="AppMonitor.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

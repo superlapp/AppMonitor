@@ -32,7 +32,7 @@ namespace AppMonitor
         private void StartMonitoring()
         {
             mon = new MonitorWCFService();
-            w = new Worker(mon, listBox1);
+            w = new Worker(mon, listView1);
             //
             w.StartMonitoring();
             //

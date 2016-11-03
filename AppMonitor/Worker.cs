@@ -9,7 +9,7 @@ namespace AppMonitor
 {
     class Worker : AppHelper
     {
-        ListBox lb;
+        ListView lv;
         MonitorWCFService mon;
         AppInfo activeProcess;
         AppInfo currentProcess;
@@ -18,10 +18,10 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public Worker(MonitorWCFService mon, ListBox lb)
+        public Worker(MonitorWCFService mon, ListView lv)
         {
             this.mon = mon;
-            this.lb = lb;
+            this.lv = lv;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -30,7 +30,8 @@ namespace AppMonitor
         {
             try
             {
-                lb.Items.Clear();
+                lv.Items.Clear();
+
                 activeProcess = GetActiveAppInfo();
                 startTime = DateTime.Now;
                 ApplicationFound(activeProcess, startTime);
@@ -54,8 +55,9 @@ namespace AppMonitor
                     //
                     if (currentProcess.Id != activeProcess.Id)
                     {
+                        startTime = DateTime.Now;
+                        //
                         ApplicationIsLost(currentProcess, DateTime.Now);
-
                         ApplicationFound(activeProcess, startTime);
                         //
                         currentProcess = activeProcess;
@@ -70,21 +72,31 @@ namespace AppMonitor
 
         public void StopMonitoring()
         {
-            lb.Items.Add("Lost: " + currentProcess.AppTitle);
+            AddItem(currentProcess, DateTime.Now, true);
             ApplicationIsLost(currentProcess, DateTime.Now);
             mon.Dispose();
         }
 
         private void ApplicationFound(AppInfo ai, DateTime dt)
         {
-            lb.Items.Add("Found: " + ai.AppTitle);
+            AddItem(ai, dt, false);
             mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
 
         private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
-            lb.Items.Add("Lost: " + ai.AppTitle);
+            AddItem(ai, dt, true);
             mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+        }
+
+        private void AddItem(AppInfo ai, DateTime dt, bool isLost)
+        {
+            ListViewItem lvi = new ListViewItem("");
+            lvi.SubItems.Add(dt.ToLongTimeString());
+            lvi.SubItems.Add(ai.AppTitle);
+            lv.Items.Add(lvi);
+            lvi.Selected = true;
+            lvi.EnsureVisible();
         }
     }
 }
