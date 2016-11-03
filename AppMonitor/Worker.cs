@@ -7,8 +7,9 @@ using System.Windows.Forms;
 
 namespace AppMonitor
 {
-    class Worker : AppHelper;
+    class Worker : AppHelper
     {
+        ListBox lb;
         MonitorWCFService mon;
         AppInfo activeProcess;
         AppInfo currentProcess;
@@ -17,9 +18,10 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public Worker(MonitorWCFService mon)
+        public Worker(MonitorWCFService mon, ListBox lb)
         {
             this.mon = mon;
+            this.lb = lb;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -28,7 +30,7 @@ namespace AppMonitor
         {
             try
             {
-                mon = new MonitorWCFService();
+                lb.Items.Clear();
                 activeProcess = GetActiveAppInfo();
                 startTime = DateTime.Now;
                 ApplicationFound(activeProcess, startTime);
@@ -68,16 +70,20 @@ namespace AppMonitor
 
         public void StopMonitoring()
         {
+            lb.Items.Add("Lost: " + currentProcess.AppTitle);
+            ApplicationIsLost(currentProcess, DateTime.Now);
             mon.Dispose();
         }
 
         private void ApplicationFound(AppInfo ai, DateTime dt)
         {
+            lb.Items.Add("Found: " + ai.AppTitle);
             mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
 
         private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
+            lb.Items.Add("Lost: " + ai.AppTitle);
             mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
         }
     }

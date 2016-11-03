@@ -49,7 +49,7 @@ namespace AppMonitor.WCF_Services {
         
         /// <remarks/>
         public MonitorWCFService() {
-            this.Url = global::AppMonitor.Properties.Settings.Default.AppMonitor_MonitorWCFService_MonitorWCFService;
+            this.Url = global::AppMonitor.Properties.Settings.Default.AppMonitor_WCF_Services_MonitorWCFService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

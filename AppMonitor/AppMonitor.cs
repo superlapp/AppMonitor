@@ -1,4 +1,4 @@
-﻿using AppMonitorWindowsService.WCF_Services;
+﻿using AppMonitor.WCF_Services;
 using System;
 using System.Diagnostics;
 using System.IO;
