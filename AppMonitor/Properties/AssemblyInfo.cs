@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AppMonitorWindowsService")]
+[assembly: AssemblyTitle("AppMonitor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AppMonitorWindowsService")]
+[assembly: AssemblyProduct("AppMonitor")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c2415e7e-0072-465d-9f31-25018bb00ab7")]
+[assembly: Guid("59c0629d-0010-4c7e-8596-35e8b57cae09")]
 
 // Version information for an assembly consists of the following four values:
 //

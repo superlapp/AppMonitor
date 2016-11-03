@@ -1,38 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AppMonitorWindowsService.WCF_Services;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AppMonitorWindowsService.WCF_Services;
+using System.IO;
 using System.Runtime.InteropServices;
 
-namespace AppMonitorWindowsService
+namespace AppMonitor
 {
     class AppMonitor
     {
         [DllImport("user32.dll")]
         private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
-        
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
         IntPtr hwnd;
-        
-        public struct AppInfo
-        {
-            public int id;
-            public string AppTitle;
-            public string AppPath;
-        }
+
         AppInfo ai;
         //---------------------------------------------------------------------
         private MonitorWCFService mon;
-        private AppInfo currentProcess; //= new AppInfo();
+        private AppInfo currentProcess;
         private AppInfo activeProcess;
         //
         private DateTime startTime = DateTime.Now;
+
+        //
+
+        FileStream fs;
+        StreamWriter sw;
+
+
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -49,7 +46,7 @@ namespace AppMonitorWindowsService
             Process p = Process.GetProcessById((int)pid);
             //
             ai = new AppInfo();
-            ai.id = p.Id;
+            ai.Id = p.Id;
             ai.AppTitle = (p.Id == 0) ? "" : p.MainModule.FileVersionInfo.FileDescription;
             ai.AppPath = (p.Id == 0) ? "" : p.MainModule.FileName;
             //
@@ -65,23 +62,54 @@ namespace AppMonitorWindowsService
         //---------------------------------------------------------------------
         public void StartMonitoring()
         {
-            mon = new MonitorWCFService();
-            activeProcess = GetActiveAppInfo();
-            startTime = DateTime.Now;
-            ApplicationFound(activeProcess, startTime);
-            //
-            currentProcess = activeProcess;
-        }
-
-        public void Monitoring()
-        {
-            if (currentProcess.id != activeProcess.id)
+            try
             {
-                ApplicationIsLost(currentProcess, DateTime.Now);
+                fs = new FileStream(@"C:\logs.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                sw = new StreamWriter(fs);
+
+                mon = new MonitorWCFService();
+                activeProcess = GetActiveAppInfo();
+                startTime = DateTime.Now;
                 ApplicationFound(activeProcess, startTime);
                 //
                 currentProcess = activeProcess;
             }
+            catch (Exception ex)
+            {
+                sw.WriteLine("Err: " + ex.Message);
+                sw.Flush();
+            }
+        }
+
+        public void Monitoring()
+        {
+            activeProcess = GetActiveAppInfo();
+            sw.WriteLine("--> " + ai.AppTitle);
+            sw.Flush();
+
+
+            //try
+            //{
+            //    activeProcess = GetActiveAppInfo();
+
+            //    if (activeProcess.Id != 0)
+            //    {
+            //        //
+            //        if (currentProcess.Id != activeProcess.Id)
+            //        {
+            //            ApplicationIsLost(currentProcess, DateTime.Now);
+
+            //            ApplicationFound(activeProcess, startTime);
+            //            //
+            //            currentProcess = activeProcess;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    sw.WriteLine("Err: " + ex.Message);
+            //    sw.Flush();
+            //}
         }
 
         public void StopMonitoring()
@@ -91,12 +119,16 @@ namespace AppMonitorWindowsService
         //---------------------------------------------------------------------
         private void ApplicationFound(AppInfo ai, DateTime dt)
         {
-            mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            //mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            sw.WriteLine("Found: " + ai.AppTitle);
+            sw.Flush();
         }
 
         private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
-            mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            //mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            sw.WriteLine("Lost: " + ai.AppTitle);
+            sw.Flush();
         }
     }
 }

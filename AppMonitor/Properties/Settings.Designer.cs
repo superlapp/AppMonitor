@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AppMonitorWindowsService.Properties {
+namespace AppMonitor.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -27,9 +27,9 @@ namespace AppMonitorWindowsService.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/AppMonitor/MonitorWCFService.svc")]
-        public string AppMonitorWindowsService_WCF_Services_MonitorWCFService {
+        public string AppMonitor_WCF_Services_MonitorWCFService {
             get {
-                return ((string)(this["AppMonitorWindowsService_WCF_Services_MonitorWCFService"]));
+                return ((string)(this["AppMonitor_WCF_Services_MonitorWCFService"]));
             }
         }
     }
