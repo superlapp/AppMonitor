@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +28,9 @@ namespace AppMonitorWPF
             InitializeComponent();
         }
 
-        private void connectToWCFBtn_Click(object sender, RoutedEventArgs e)
+        private void Window_Activated(object sender, EventArgs e)
         {
             srv = new AppMonitorWPF.WCF_Services.MonitorWCFService();
-            connectToWCFBtn.Content = "Connected";
-            connectToWCFBtn.IsEnabled = false;
         }
 
         private void getResultBtn_Click(object sender, RoutedEventArgs e)
@@ -51,17 +50,35 @@ namespace AppMonitorWPF
             }
         }
 
+        bool scan = false;
+
         private void getTestsButton_Click(object sender, RoutedEventArgs e)
         {
-            testsListBox.Items.Clear();
-            //
-            string[] tt = srv.GetTests();
-            //
-            foreach (string t in tt)
-            {
-                testsListBox.Items.Insert(0, t);
+            scan = true;
+            DoScan();
+        }
 
+        async private void DoScan()
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            //
+            while (scan == true)
+            {
+                string[] tt = srv.GetTests();
+                testsListBox.Items.Clear();
+                foreach (string t in tt)
+                {
+                    testsListBox.Items.Add(t);
+                    testsListBox.ScrollIntoView(t);
+                }
+                //
+                await Task.Delay(50);
             }
+        }
+
+        private void stopTestBtn_Click(object sender, RoutedEventArgs e)
+        {
+            scan = false;
         }
     }
 }
