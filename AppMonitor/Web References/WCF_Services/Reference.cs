@@ -33,9 +33,7 @@ namespace AppMonitor.WCF_Services {
         
         private System.Threading.SendOrPostCallback GetRequestsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ApplicationFoundOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ApplicationIsLostOperationCompleted;
+        private System.Threading.SendOrPostCallback AddApplicationEventOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetHostsOperationCompleted;
         
@@ -43,7 +41,7 @@ namespace AppMonitor.WCF_Services {
         
         private System.Threading.SendOrPostCallback GetApplicationsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetTestsOperationCompleted;
+        private System.Threading.SendOrPostCallback GetEventsOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -90,10 +88,7 @@ namespace AppMonitor.WCF_Services {
         public event GetRequestsCompletedEventHandler GetRequestsCompleted;
         
         /// <remarks/>
-        public event ApplicationFoundCompletedEventHandler ApplicationFoundCompleted;
-        
-        /// <remarks/>
-        public event ApplicationIsLostCompletedEventHandler ApplicationIsLostCompleted;
+        public event AddApplicationEventCompletedEventHandler AddApplicationEventCompleted;
         
         /// <remarks/>
         public event GetHostsCompletedEventHandler GetHostsCompleted;
@@ -105,7 +100,7 @@ namespace AppMonitor.WCF_Services {
         public event GetApplicationsCompletedEventHandler GetApplicationsCompleted;
         
         /// <remarks/>
-        public event GetTestsCompletedEventHandler GetTestsCompleted;
+        public event GetEventsCompletedEventHandler GetEventsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetStatus", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -138,10 +133,10 @@ namespace AppMonitor.WCF_Services {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetRequests", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
-        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
-        public string[] GetRequests() {
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+        public Request[] GetRequests() {
             object[] results = this.Invoke("GetRequests", new object[0]);
-            return ((string[])(results[0]));
+            return ((Request[])(results[0]));
         }
         
         /// <remarks/>
@@ -165,74 +160,42 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/ApplicationFound", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ApplicationFound([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string user, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string app, System.DateTime datetime, [System.Xml.Serialization.XmlIgnoreAttribute()] bool datetimeSpecified) {
-            this.Invoke("ApplicationFound", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/AddApplicationEvent", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void AddApplicationEvent([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string user, System.DateTime eventDateTime, [System.Xml.Serialization.XmlIgnoreAttribute()] bool eventDateTimeSpecified, int state, [System.Xml.Serialization.XmlIgnoreAttribute()] bool stateSpecified, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string appTitle) {
+            this.Invoke("AddApplicationEvent", new object[] {
                         host,
                         user,
-                        app,
-                        datetime,
-                        datetimeSpecified});
+                        eventDateTime,
+                        eventDateTimeSpecified,
+                        state,
+                        stateSpecified,
+                        appTitle});
         }
         
         /// <remarks/>
-        public void ApplicationFoundAsync(string host, string user, string app, System.DateTime datetime, bool datetimeSpecified) {
-            this.ApplicationFoundAsync(host, user, app, datetime, datetimeSpecified, null);
+        public void AddApplicationEventAsync(string host, string user, System.DateTime eventDateTime, bool eventDateTimeSpecified, int state, bool stateSpecified, string appTitle) {
+            this.AddApplicationEventAsync(host, user, eventDateTime, eventDateTimeSpecified, state, stateSpecified, appTitle, null);
         }
         
         /// <remarks/>
-        public void ApplicationFoundAsync(string host, string user, string app, System.DateTime datetime, bool datetimeSpecified, object userState) {
-            if ((this.ApplicationFoundOperationCompleted == null)) {
-                this.ApplicationFoundOperationCompleted = new System.Threading.SendOrPostCallback(this.OnApplicationFoundOperationCompleted);
+        public void AddApplicationEventAsync(string host, string user, System.DateTime eventDateTime, bool eventDateTimeSpecified, int state, bool stateSpecified, string appTitle, object userState) {
+            if ((this.AddApplicationEventOperationCompleted == null)) {
+                this.AddApplicationEventOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddApplicationEventOperationCompleted);
             }
-            this.InvokeAsync("ApplicationFound", new object[] {
+            this.InvokeAsync("AddApplicationEvent", new object[] {
                         host,
                         user,
-                        app,
-                        datetime,
-                        datetimeSpecified}, this.ApplicationFoundOperationCompleted, userState);
+                        eventDateTime,
+                        eventDateTimeSpecified,
+                        state,
+                        stateSpecified,
+                        appTitle}, this.AddApplicationEventOperationCompleted, userState);
         }
         
-        private void OnApplicationFoundOperationCompleted(object arg) {
-            if ((this.ApplicationFoundCompleted != null)) {
+        private void OnAddApplicationEventOperationCompleted(object arg) {
+            if ((this.AddApplicationEventCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ApplicationFoundCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/ApplicationIsLost", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ApplicationIsLost([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string user, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string app, System.DateTime datetime, [System.Xml.Serialization.XmlIgnoreAttribute()] bool datetimeSpecified) {
-            this.Invoke("ApplicationIsLost", new object[] {
-                        host,
-                        user,
-                        app,
-                        datetime,
-                        datetimeSpecified});
-        }
-        
-        /// <remarks/>
-        public void ApplicationIsLostAsync(string host, string user, string app, System.DateTime datetime, bool datetimeSpecified) {
-            this.ApplicationIsLostAsync(host, user, app, datetime, datetimeSpecified, null);
-        }
-        
-        /// <remarks/>
-        public void ApplicationIsLostAsync(string host, string user, string app, System.DateTime datetime, bool datetimeSpecified, object userState) {
-            if ((this.ApplicationIsLostOperationCompleted == null)) {
-                this.ApplicationIsLostOperationCompleted = new System.Threading.SendOrPostCallback(this.OnApplicationIsLostOperationCompleted);
-            }
-            this.InvokeAsync("ApplicationIsLost", new object[] {
-                        host,
-                        user,
-                        app,
-                        datetime,
-                        datetimeSpecified}, this.ApplicationIsLostOperationCompleted, userState);
-        }
-        
-        private void OnApplicationIsLostOperationCompleted(object arg) {
-            if ((this.ApplicationIsLostCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ApplicationIsLostCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.AddApplicationEventCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -330,31 +293,31 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetTests", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetEvents", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
-        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
-        public string[] GetTests() {
-            object[] results = this.Invoke("GetTests", new object[0]);
-            return ((string[])(results[0]));
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+        public AppEvent[] GetEvents() {
+            object[] results = this.Invoke("GetEvents", new object[0]);
+            return ((AppEvent[])(results[0]));
         }
         
         /// <remarks/>
-        public void GetTestsAsync() {
-            this.GetTestsAsync(null);
+        public void GetEventsAsync() {
+            this.GetEventsAsync(null);
         }
         
         /// <remarks/>
-        public void GetTestsAsync(object userState) {
-            if ((this.GetTestsOperationCompleted == null)) {
-                this.GetTestsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetTestsOperationCompleted);
+        public void GetEventsAsync(object userState) {
+            if ((this.GetEventsOperationCompleted == null)) {
+                this.GetEventsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetEventsOperationCompleted);
             }
-            this.InvokeAsync("GetTests", new object[0], this.GetTestsOperationCompleted, userState);
+            this.InvokeAsync("GetEvents", new object[0], this.GetEventsOperationCompleted, userState);
         }
         
-        private void OnGetTestsOperationCompleted(object arg) {
-            if ((this.GetTestsCompleted != null)) {
+        private void OnGetEventsOperationCompleted(object arg) {
+            if ((this.GetEventsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetTestsCompleted(this, new GetTestsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetEventsCompleted(this, new GetEventsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -374,6 +337,178 @@ namespace AppMonitor.WCF_Services {
                 return true;
             }
             return false;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public partial class Request {
+        
+        private System.DateTime requestDateTimeField;
+        
+        private bool requestDateTimeFieldSpecified;
+        
+        private string requestTextField;
+        
+        /// <remarks/>
+        public System.DateTime RequestDateTime {
+            get {
+                return this.requestDateTimeField;
+            }
+            set {
+                this.requestDateTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool RequestDateTimeSpecified {
+            get {
+                return this.requestDateTimeFieldSpecified;
+            }
+            set {
+                this.requestDateTimeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string RequestText {
+            get {
+                return this.requestTextField;
+            }
+            set {
+                this.requestTextField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public partial class AppEvent {
+        
+        private string appTitleField;
+        
+        private System.Nullable<System.DateTime> eventDateTimeField;
+        
+        private bool eventDateTimeFieldSpecified;
+        
+        private string hostField;
+        
+        private int idField;
+        
+        private bool idFieldSpecified;
+        
+        private System.Nullable<int> stateField;
+        
+        private bool stateFieldSpecified;
+        
+        private string userField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string AppTitle {
+            get {
+                return this.appTitleField;
+            }
+            set {
+                this.appTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> EventDateTime {
+            get {
+                return this.eventDateTimeField;
+            }
+            set {
+                this.eventDateTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EventDateTimeSpecified {
+            get {
+                return this.eventDateTimeFieldSpecified;
+            }
+            set {
+                this.eventDateTimeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string Host {
+            get {
+                return this.hostField;
+            }
+            set {
+                this.hostField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IdSpecified {
+            get {
+                return this.idFieldSpecified;
+            }
+            set {
+                this.idFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> State {
+            get {
+                return this.stateField;
+            }
+            set {
+                this.stateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool StateSpecified {
+            get {
+                return this.stateFieldSpecified;
+            }
+            set {
+                this.stateFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string User {
+            get {
+                return this.userField;
+            }
+            set {
+                this.userField = value;
+            }
         }
     }
     
@@ -421,21 +556,17 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        public string[] Result {
+        public Request[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string[])(this.results[0]));
+                return ((Request[])(this.results[0]));
             }
         }
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void ApplicationFoundCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void ApplicationIsLostCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void AddApplicationEventCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
@@ -517,26 +648,26 @@ namespace AppMonitor.WCF_Services {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void GetTestsCompletedEventHandler(object sender, GetTestsCompletedEventArgs e);
+    public delegate void GetEventsCompletedEventHandler(object sender, GetEventsCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetTestsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetEventsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetTestsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetEventsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
         /// <remarks/>
-        public string[] Result {
+        public AppEvent[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string[])(this.results[0]));
+                return ((AppEvent[])(this.results[0]));
             }
         }
     }

@@ -99,6 +99,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Web References\WCF_Services\AppEvent.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\WCF_Services\MonitorWCFService.wsdl" />
     <None Include="Web References\WCF_Services\MonitorWCFService.xsd">
       <SubType>Designer</SubType>
@@ -130,6 +133,16 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppMonitorWCFService\AppMonitorWCFService.csproj">
+      <Project>{fc22e70b-2488-494b-acae-0aedcb8ac5e0}</Project>
+      <Name>AppMonitorWCFService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
+      <Project>{21bb6127-35ab-465e-8a46-387c45b295d7}</Project>
+      <Name>SharedClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WebReferenceUrl Include="http://localhost/AppMonitor/MonitorWCFService.svc">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\WCF_Services\</RelPath>
@@ -144,12 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\WCF_Services\MonitorWCFService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
-      <Project>{21bb6127-35ab-465e-8a46-387c45b295d7}</Project>
-      <Name>SharedClasses</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

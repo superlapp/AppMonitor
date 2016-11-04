@@ -4,7 +4,8 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService" />
+      <xsd:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMonitorWCFService_GetStatus_InputMessage">
@@ -19,17 +20,11 @@
   <wsdl:message name="IMonitorWCFService_GetRequests_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRequestsResponse" />
   </wsdl:message>
-  <wsdl:message name="IMonitorWCFService_ApplicationFound_InputMessage">
-    <wsdl:part name="parameters" element="tns:ApplicationFound" />
+  <wsdl:message name="IMonitorWCFService_AddApplicationEvent_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddApplicationEvent" />
   </wsdl:message>
-  <wsdl:message name="IMonitorWCFService_ApplicationFound_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ApplicationFoundResponse" />
-  </wsdl:message>
-  <wsdl:message name="IMonitorWCFService_ApplicationIsLost_InputMessage">
-    <wsdl:part name="parameters" element="tns:ApplicationIsLost" />
-  </wsdl:message>
-  <wsdl:message name="IMonitorWCFService_ApplicationIsLost_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ApplicationIsLostResponse" />
+  <wsdl:message name="IMonitorWCFService_AddApplicationEvent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddApplicationEventResponse" />
   </wsdl:message>
   <wsdl:message name="IMonitorWCFService_GetHosts_InputMessage">
     <wsdl:part name="parameters" element="tns:GetHosts" />
@@ -49,11 +44,11 @@
   <wsdl:message name="IMonitorWCFService_GetApplications_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetApplicationsResponse" />
   </wsdl:message>
-  <wsdl:message name="IMonitorWCFService_GetTests_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetTests" />
+  <wsdl:message name="IMonitorWCFService_GetEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEvents" />
   </wsdl:message>
-  <wsdl:message name="IMonitorWCFService_GetTests_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetTestsResponse" />
+  <wsdl:message name="IMonitorWCFService_GetEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsResponse" />
   </wsdl:message>
   <wsdl:portType name="IMonitorWCFService">
     <wsdl:operation name="GetStatus">
@@ -64,13 +59,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/GetRequests" message="tns:IMonitorWCFService_GetRequests_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/GetRequestsResponse" message="tns:IMonitorWCFService_GetRequests_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ApplicationFound">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/ApplicationFound" message="tns:IMonitorWCFService_ApplicationFound_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/ApplicationFoundResponse" message="tns:IMonitorWCFService_ApplicationFound_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ApplicationIsLost">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/ApplicationIsLost" message="tns:IMonitorWCFService_ApplicationIsLost_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/ApplicationIsLostResponse" message="tns:IMonitorWCFService_ApplicationIsLost_OutputMessage" />
+    <wsdl:operation name="AddApplicationEvent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/AddApplicationEvent" message="tns:IMonitorWCFService_AddApplicationEvent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/AddApplicationEventResponse" message="tns:IMonitorWCFService_AddApplicationEvent_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetHosts">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/GetHosts" message="tns:IMonitorWCFService_GetHosts_InputMessage" />
@@ -84,9 +75,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/GetApplications" message="tns:IMonitorWCFService_GetApplications_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/GetApplicationsResponse" message="tns:IMonitorWCFService_GetApplications_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetTests">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/GetTests" message="tns:IMonitorWCFService_GetTests_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/GetTestsResponse" message="tns:IMonitorWCFService_GetTests_OutputMessage" />
+    <wsdl:operation name="GetEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitorWCFService/GetEvents" message="tns:IMonitorWCFService_GetEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitorWCFService/GetEventsResponse" message="tns:IMonitorWCFService_GetEvents_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMonitorWCFService" type="tns:IMonitorWCFService">
@@ -109,17 +100,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ApplicationFound">
-      <soap:operation soapAction="http://tempuri.org/IMonitorWCFService/ApplicationFound" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ApplicationIsLost">
-      <soap:operation soapAction="http://tempuri.org/IMonitorWCFService/ApplicationIsLost" style="document" />
+    <wsdl:operation name="AddApplicationEvent">
+      <soap:operation soapAction="http://tempuri.org/IMonitorWCFService/AddApplicationEvent" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -154,8 +136,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetTests">
-      <soap:operation soapAction="http://tempuri.org/IMonitorWCFService/GetTests" style="document" />
+    <wsdl:operation name="GetEvents">
+      <soap:operation soapAction="http://tempuri.org/IMonitorWCFService/GetEvents" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

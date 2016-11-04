@@ -43,12 +43,11 @@ namespace AppMonitorWPF
         {
             requestsListBox.Items.Clear();
             //
-            var rq = srv.GetRequests();
+            List<WCF_Services.Request> rr = srv.GetRequests().ToList();
             //
-            foreach (object r in rq)
+            foreach (WCF_Services.Request r in rr)
             {
-                SharedClasses.Request rr = (SharedClasses.Request)r;
-                requestsListBox.Items.Add(rr.requestDateTime + " " + rr.requestMessage);
+                requestsListBox.Items.Add(r.RequestDateTime + " " + r.RequestText);
             }
         }
 
@@ -68,11 +67,15 @@ namespace AppMonitorWPF
             {
                 while (scan == true)
                 {
-                    string[] tt = srv.GetTests();
+                    List<WCF_Services.AppEvent> tt = srv.GetEvents().ToList();
                     testsListBox.Items.Clear();
-                    foreach (string t in tt)
+
+                    foreach (WCF_Services.AppEvent t in tt)
                     {
-                        testsListBox.Items.Add(t);
+                        testsListBox.Items.Add(
+                            t.EventDateTime.Value.ToLongTimeString() + " " + t.EventDateTime.Value.ToShortDateString() +
+                            t.State + " " + t.AppTitle);
+
                         testsListBox.ScrollIntoView(t);
                     }
                     //

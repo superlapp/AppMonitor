@@ -39,17 +39,13 @@ namespace AppMonitorWCFService
                 save_result.ToString();
         }
 
-        public List<SharedClasses.Request> GetRequests()
+        public List<Request> GetRequests()
         {
-            List<SharedClasses.Request> requests = new List<SharedClasses.Request>();
+            List<Request> requests = new List<Request>();
             //
             foreach (IncomingRequest ir in db.IncomingRequests)
             {
-                SharedClasses.Request rq = new SharedClasses.Request();
-                rq.requestDateTime = ir.TimeOfReceiving;
-                rq.requestMessage = ir.Request;
-                //
-                requests.Add(rq);
+                requests.Add(new Request(ir.TimeOfReceiving, ir.Request));
             }
             //
             return requests;
@@ -57,20 +53,18 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public void ApplicationFound(string host, string user, string app, DateTime datetime)
+        public void AddApplicationEvent(string host, string user, DateTime eventDateTime, int state, string appTitle)
         {
-            Test t = new Test();
-            t.MessageTxt = string.Format("F: {0}; {1}; {2}; {3}", host, user, app,
-                datetime.ToString("dd.MM.yy hh:mm:ss"));
-            db.Tests.Add(t);
-            db.SaveChanges();
-        }
-
-        public void ApplicationIsLost(string host, string user, string app, DateTime datetime)
-        {
-            Test t = new Test();
-            t.MessageTxt = string.Format("L: {0};{1};{2};{3}", host, user, app, datetime.ToString("dd.MM.yy hh:mm:ss"));
-            db.Tests.Add(t);
+            AppEvent ae = new AppEvent();
+            //
+            ae.Host = host;
+            ae.User = user;
+            ae.EventDateTime = eventDateTime;
+            ae.State = state;
+            ae.AppTitle = appTitle;
+            //
+            db.AppEvents.Add(ae);
+            //
             db.SaveChanges();
         }
         //---------------------------------------------------------------------
@@ -100,16 +94,9 @@ namespace AppMonitorWCFService
             return apps;
         }
 
-        public List<string> GetTests()
+        public List<AppEvent> GetEvents()
         {
-            List<string> tests = new List<string>();
-            //
-            foreach (Test t in db.Tests)
-            {
-                tests.Add(t.MessageTxt);
-            }
-            //
-            return tests;
+            return db.AppEvents.ToList();
         }
     }
 }

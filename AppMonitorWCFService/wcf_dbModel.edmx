@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="wcf_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppEvents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Host" Type="varchar" MaxLength="50" />
+          <Property Name="User" Type="varchar" MaxLength="50" />
+          <Property Name="EventDateTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="AppTitle" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="IncomingRequests">
           <Key>
             <PropertyRef Name="Id" />
@@ -21,6 +32,7 @@
           <Property Name="MessageTxt" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityContainer Name="wcf_dbModelStoreContainer">
+          <EntitySet Name="AppEvents" EntityType="Self.AppEvents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncomingRequests" EntityType="Self.IncomingRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -31,6 +43,7 @@
         <EntityContainer Name="wcf_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="IncomingRequests" EntityType="wcf_dbModel.IncomingRequest" />
           <EntitySet Name="Tests" EntityType="wcf_dbModel.Test" />
+          <EntitySet Name="AppEvents" EntityType="wcf_dbModel.AppEvent" />
         </EntityContainer>
         <EntityType Name="IncomingRequest">
           <Key>
@@ -46,6 +59,17 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MessageTxt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AppEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventDateTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="AppTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -66,6 +90,18 @@
             <EntityTypeMapping TypeName="wcf_dbModel.Test">
               <MappingFragment StoreEntitySet="Tests">
                 <ScalarProperty Name="MessageTxt" ColumnName="MessageTxt" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppEvents">
+            <EntityTypeMapping TypeName="wcf_dbModel.AppEvent">
+              <MappingFragment StoreEntitySet="AppEvents">
+                <ScalarProperty Name="AppTitle" ColumnName="AppTitle" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

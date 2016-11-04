@@ -81,13 +81,13 @@ namespace AppMonitor
         private void ApplicationFound(AppInfo ai, DateTime dt)
         {
             AddItem(ai, dt, false);
-            mon.ApplicationFound(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            mon.AddApplicationEvent(Environment.MachineName, Environment.UserName, dt, true, 1, true, ai.AppTitle);
         }
 
         private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
             AddItem(ai, dt, true);
-            mon.ApplicationIsLost(Environment.MachineName, Environment.UserName, ai.AppTitle, dt, true);
+            mon.AddApplicationEvent(Environment.MachineName, Environment.UserName, dt, true, 0, true, ai.AppTitle);
         }
 
         private void AddItem(AppInfo ai, DateTime dt, bool isLost)

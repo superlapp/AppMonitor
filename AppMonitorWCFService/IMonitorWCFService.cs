@@ -14,14 +14,21 @@ namespace AppMonitorWCFService
         [OperationContract]
         string GetStatus();
 
-        [OperationContract]
-        List<SharedClasses.Request> GetRequests();
+
+
+
+
 
         [OperationContract]
-        void ApplicationFound(string host, string user, string app, DateTime datetime);
+        List<Request> GetRequests();
+
+
+
+
+
 
         [OperationContract]
-        void ApplicationIsLost(string host, string user, string app, DateTime datetime);
+        void AddApplicationEvent(string host, string user, DateTime eventDateTime, int state, string appTitle);
 
         [OperationContract]
         List<string> GetHosts();
@@ -33,6 +40,6 @@ namespace AppMonitorWCFService
         List<string> GetApplications(string host, string users);
 
         [OperationContract]
-        List<string> GetTests();
+        List<AppEvent> GetEvents();
     }
 }

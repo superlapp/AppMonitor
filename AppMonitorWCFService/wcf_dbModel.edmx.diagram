@@ -7,6 +7,7 @@
       <Diagram DiagramId="3b7562b9c7dc4d76ab8716b71b0a1d20" Name="Diagram1">
         <EntityTypeShape EntityType="wcf_dbModel.IncomingRequest" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="wcf_dbModel.Test" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="wcf_dbModel.AppEvent" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
