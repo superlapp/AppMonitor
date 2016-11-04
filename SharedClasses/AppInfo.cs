@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AppMonitor
+namespace SharedClasses
 {
-    class AppInfo
+    public class AppInfo
     {
         public int Id { get; set; }
         public string AppTitle { get; set; }

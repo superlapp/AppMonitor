@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using SharedClasses;
 
 namespace AppMonitor
 {
@@ -16,6 +17,7 @@ namespace AppMonitor
         private static extern IntPtr GetForegroundWindow();
 
         IntPtr hwnd;
+
         AppInfo ai;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

@@ -47,7 +47,8 @@ namespace AppMonitorWCFService
             {
                 requests.Add(
                     ir.Request + " at " +
-                    ir.TimeOfReceiving.ToString("dd.MM.yy hh:mm:ss"));
+                    ir.TimeOfReceiving.ToLongTimeString() + " " +
+                    ir.TimeOfReceiving.ToLongDateString());
             }
             //
             return requests;
@@ -58,7 +59,8 @@ namespace AppMonitorWCFService
         public void ApplicationFound(string host, string user, string app, DateTime datetime)
         {
             Test t = new Test();
-            t.MessageTxt = string.Format("F: {0};{1};{2};{3}", host, user, app, datetime.ToString("dd.MM.yy hh:mm:ss"));
+            t.MessageTxt = string.Format("F: {0}; {1}; {2}; {3}", host, user, app,
+                datetime.ToString("dd.MM.yy hh:mm:ss"));
             db.Tests.Add(t);
             db.SaveChanges();
         }

@@ -62,17 +62,26 @@ namespace AppMonitorWPF
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             //
-            while (scan == true)
+            try
             {
-                string[] tt = srv.GetTests();
-                testsListBox.Items.Clear();
-                foreach (string t in tt)
+                while (scan == true)
                 {
-                    testsListBox.Items.Add(t);
-                    testsListBox.ScrollIntoView(t);
+                    string[] tt = srv.GetTests();
+                    testsListBox.Items.Clear();
+                    foreach (string t in tt)
+                    {
+                        testsListBox.Items.Add(t);
+                        testsListBox.ScrollIntoView(t);
+                    }
+                    //
+                    await Task.Delay(200);
                 }
-                //
-                await Task.Delay(50);
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                scan = false;
+                MessageBox.Show(ex.Message);
             }
         }
 

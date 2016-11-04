@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AppMonitor.WCF_Services;
 using System.Windows.Forms;
+using SharedClasses;
 
 namespace AppMonitor
 {
