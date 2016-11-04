@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="314.5" Width="653.5" Activated="Window_Activated">
     <Grid>
-        <Button x:Name="getResultBtn" Content="Get result" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120" Height="24" Click="getResultBtn_Click"/>
-        <Label x:Name="resultLabel" Content="Label" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.311,-0.142" Height="24" Width="376"/>
-        <TabControl Margin="10,39,10,10">
+        <Button x:Name="getResultBtn" Content="Get result" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="45" Click="getResultBtn_Click"/>
+        <Label x:Name="resultLabel" Content="Label" HorizontalAlignment="Left" Margin="135,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.311,-0.142" Height="46" Width="501"/>
+        <TabControl Margin="10,60,10,10">
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
                     <Button x:Name="button" Content="Get requests" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="24" Click="button_Click"/>
