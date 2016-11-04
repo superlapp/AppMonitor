@@ -92,6 +92,7 @@ namespace AppMonitor
         private void AddItem(AppInfo ai, DateTime dt, bool isLost)
         {
             ListViewItem lvi = new ListViewItem("");
+            lvi.ImageIndex = (isLost == false) ? 0 : 1;
             lvi.SubItems.Add(dt.ToLongTimeString());
             lvi.SubItems.Add(ai.AppTitle);
             lv.Items.Add(lvi);
