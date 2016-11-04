@@ -15,7 +15,7 @@ namespace AppMonitorWCFService
         string GetStatus();
 
         [OperationContract]
-        List<string> GetRequests();
+        List<SharedClasses.Request> GetRequests();
 
         [OperationContract]
         void ApplicationFound(string host, string user, string app, DateTime datetime);

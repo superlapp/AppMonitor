@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SharedClasses;
 
 namespace AppMonitorWPF
 {
@@ -42,11 +43,12 @@ namespace AppMonitorWPF
         {
             requestsListBox.Items.Clear();
             //
-            string[] rq = srv.GetRequests();
+            var rq = srv.GetRequests();
             //
-            foreach (string r in rq)
+            foreach (object r in rq)
             {
-                requestsListBox.Items.Add(r);
+                SharedClasses.Request rr = (SharedClasses.Request)r;
+                requestsListBox.Items.Add(rr.requestDateTime + " " + rr.requestMessage);
             }
         }
 

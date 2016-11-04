@@ -109,9 +109,15 @@
     <None Include="Web References\WCF_Services\MonitorWCFService1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Web References\WCF_Services\MonitorWCFService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web References\WCF_Services\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WCF_Services\Request.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\WCF_Services\MonitorWCFService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
+      <Project>{21bb6127-35ab-465e-8a46-387c45b295d7}</Project>
+      <Name>SharedClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

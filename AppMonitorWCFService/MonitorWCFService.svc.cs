@@ -39,16 +39,17 @@ namespace AppMonitorWCFService
                 save_result.ToString();
         }
 
-        public List<string> GetRequests()
+        public List<SharedClasses.Request> GetRequests()
         {
-            List<string> requests = new List<string>();
+            List<SharedClasses.Request> requests = new List<SharedClasses.Request>();
             //
             foreach (IncomingRequest ir in db.IncomingRequests)
             {
-                requests.Add(
-                    ir.Request + " at " +
-                    ir.TimeOfReceiving.ToLongTimeString() + " " +
-                    ir.TimeOfReceiving.ToLongDateString());
+                SharedClasses.Request rq = new SharedClasses.Request();
+                rq.requestDateTime = ir.TimeOfReceiving;
+                rq.requestMessage = ir.Request;
+                //
+                requests.Add(rq);
             }
             //
             return requests;
