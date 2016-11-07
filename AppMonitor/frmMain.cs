@@ -14,6 +14,7 @@ namespace AppMonitor
     {
         MonitorWCFService mon;
         Worker w;
+        bool canClose = false;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -41,12 +42,51 @@ namespace AppMonitor
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            w.StopMonitoring();
+            if (canClose == false)
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
+            else
+            {
+                w.StopMonitoring();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             w.Work();
+        }
+
+        private void showWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void hideWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void closeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            canClose = true;
+            this.Close();
+        }
+
+        private void trayIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (this.Visible == true)
+                {
+                    this.Hide();
+                }
+                else
+                {
+                    this.Show();
+                }
+            }
         }
     }
 }

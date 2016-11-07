@@ -61,7 +61,7 @@ namespace AppMonitorWPF
 
         async private void DoScan()
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            //Stopwatch stopwatch = Stopwatch.StartNew();
             //
             try
             {
@@ -84,7 +84,7 @@ namespace AppMonitorWPF
             }
             catch (Exception ex)
             {
-                stopwatch.Stop();
+                //stopwatch.Stop();
                 scan = false;
                 MessageBox.Show(ex.Message);
             }
