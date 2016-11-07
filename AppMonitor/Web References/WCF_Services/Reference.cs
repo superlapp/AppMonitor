@@ -161,7 +161,7 @@ namespace AppMonitor.WCF_Services {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/AddApplicationEvent", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void AddApplicationEvent([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string user, System.DateTime eventDateTime, [System.Xml.Serialization.XmlIgnoreAttribute()] bool eventDateTimeSpecified, int state, [System.Xml.Serialization.XmlIgnoreAttribute()] bool stateSpecified, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string appTitle) {
+        public void AddApplicationEvent([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string user, System.DateTime eventDateTime, [System.Xml.Serialization.XmlIgnoreAttribute()] bool eventDateTimeSpecified, MonitorWCFServiceAppState state, [System.Xml.Serialization.XmlIgnoreAttribute()] bool stateSpecified, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string guid, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string appTitle) {
             this.Invoke("AddApplicationEvent", new object[] {
                         host,
                         user,
@@ -169,16 +169,17 @@ namespace AppMonitor.WCF_Services {
                         eventDateTimeSpecified,
                         state,
                         stateSpecified,
+                        guid,
                         appTitle});
         }
         
         /// <remarks/>
-        public void AddApplicationEventAsync(string host, string user, System.DateTime eventDateTime, bool eventDateTimeSpecified, int state, bool stateSpecified, string appTitle) {
-            this.AddApplicationEventAsync(host, user, eventDateTime, eventDateTimeSpecified, state, stateSpecified, appTitle, null);
+        public void AddApplicationEventAsync(string host, string user, System.DateTime eventDateTime, bool eventDateTimeSpecified, MonitorWCFServiceAppState state, bool stateSpecified, string guid, string appTitle) {
+            this.AddApplicationEventAsync(host, user, eventDateTime, eventDateTimeSpecified, state, stateSpecified, guid, appTitle, null);
         }
         
         /// <remarks/>
-        public void AddApplicationEventAsync(string host, string user, System.DateTime eventDateTime, bool eventDateTimeSpecified, int state, bool stateSpecified, string appTitle, object userState) {
+        public void AddApplicationEventAsync(string host, string user, System.DateTime eventDateTime, bool eventDateTimeSpecified, MonitorWCFServiceAppState state, bool stateSpecified, string guid, string appTitle, object userState) {
             if ((this.AddApplicationEventOperationCompleted == null)) {
                 this.AddApplicationEventOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddApplicationEventOperationCompleted);
             }
@@ -189,6 +190,7 @@ namespace AppMonitor.WCF_Services {
                         eventDateTimeSpecified,
                         state,
                         stateSpecified,
+                        guid,
                         appTitle}, this.AddApplicationEventOperationCompleted, userState);
         }
         
@@ -397,9 +399,11 @@ namespace AppMonitor.WCF_Services {
         
         private string appTitleField;
         
-        private System.Nullable<System.DateTime> eventDateTimeField;
+        private System.DateTime detectDTField;
         
-        private bool eventDateTimeFieldSpecified;
+        private bool detectDTFieldSpecified;
+        
+        private string guidField;
         
         private string hostField;
         
@@ -407,11 +411,15 @@ namespace AppMonitor.WCF_Services {
         
         private bool idFieldSpecified;
         
-        private System.Nullable<int> stateField;
+        private System.Nullable<System.DateTime> isLostDTField;
         
-        private bool stateFieldSpecified;
+        private bool isLostDTFieldSpecified;
         
         private string userField;
+        
+        private System.Nullable<long> workingTimeField;
+        
+        private bool workingTimeFieldSpecified;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
@@ -425,24 +433,34 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> EventDateTime {
+        public System.DateTime DetectDT {
             get {
-                return this.eventDateTimeField;
+                return this.detectDTField;
             }
             set {
-                this.eventDateTimeField = value;
+                this.detectDTField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool EventDateTimeSpecified {
+        public bool DetectDTSpecified {
             get {
-                return this.eventDateTimeFieldSpecified;
+                return this.detectDTFieldSpecified;
             }
             set {
-                this.eventDateTimeFieldSpecified = value;
+                this.detectDTFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string Guid {
+            get {
+                return this.guidField;
+            }
+            set {
+                this.guidField = value;
             }
         }
         
@@ -480,23 +498,23 @@ namespace AppMonitor.WCF_Services {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> State {
+        public System.Nullable<System.DateTime> IsLostDT {
             get {
-                return this.stateField;
+                return this.isLostDTField;
             }
             set {
-                this.stateField = value;
+                this.isLostDTField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool StateSpecified {
+        public bool IsLostDTSpecified {
             get {
-                return this.stateFieldSpecified;
+                return this.isLostDTFieldSpecified;
             }
             set {
-                this.stateFieldSpecified = value;
+                this.isLostDTFieldSpecified = value;
             }
         }
         
@@ -510,6 +528,41 @@ namespace AppMonitor.WCF_Services {
                 this.userField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<long> WorkingTime {
+            get {
+                return this.workingTimeField;
+            }
+            set {
+                this.workingTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WorkingTimeSpecified {
+            get {
+                return this.workingTimeFieldSpecified;
+            }
+            set {
+                this.workingTimeFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="MonitorWCFService.AppState", Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public enum MonitorWCFServiceAppState {
+        
+        /// <remarks/>
+        STARTED,
+        
+        /// <remarks/>
+        CLOSED,
     }
     
     /// <remarks/>

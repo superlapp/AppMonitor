@@ -41,13 +41,13 @@ namespace AppMonitorWPF
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            requestsListBox.Items.Clear();
+            //requestsListBox.Items.Clear();
             //
             List<WCF_Services.Request> rr = srv.GetRequests().ToList();
             //
             foreach (WCF_Services.Request r in rr)
             {
-                requestsListBox.Items.Add(r.RequestDateTime + " " + r.RequestText);
+                //requestsListBox.Items.Add(r.RequestDateTime + " " + r.RequestText);
             }
         }
 
@@ -61,30 +61,32 @@ namespace AppMonitorWPF
 
         async private void DoScan()
         {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-            //
             try
             {
-                while (scan == true)
-                {
+                //while (scan == true)
+                //{
                     List<WCF_Services.AppEvent> tt = srv.GetEvents().ToList();
-                    testsListBox.Items.Clear();
 
-                    foreach (WCF_Services.AppEvent t in tt)
-                    {
-                        testsListBox.Items.Add(
-                            t.EventDateTime.Value.ToLongTimeString() + " " + t.EventDateTime.Value.ToShortDateString() +
-                            t.State + " " + t.AppTitle);
+                //tt.a
 
-                        testsListBox.ScrollIntoView(t);
-                    }
+                    eventsGrid.ItemsSource = tt;
+
+                    //testsListBox.Items.Clear();
+
+                    //foreach (WCF_Services.AppEvent t in tt)
+                    //{
+                    //    testsListBox.Items.Add(
+                    //        t.EventDateTime.Value.ToLongTimeString() + " " + t.EventDateTime.Value.ToShortDateString() +
+                    //        t.State + " " + t.AppTitle);
+
+                    //    testsListBox.ScrollIntoView(t);
+                    //}
                     //
-                    await Task.Delay(200);
-                }
+                    //await Task.Delay(200);
+                //}
             }
             catch (Exception ex)
             {
-                //stopwatch.Stop();
                 scan = false;
                 MessageBox.Show(ex.Message);
             }
@@ -93,6 +95,17 @@ namespace AppMonitorWPF
         private void stopTestBtn_Click(object sender, RoutedEventArgs e)
         {
             scan = false;
+        }
+
+        private void eventsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            WCF_Services.AppEvent ee = (WCF_Services.AppEvent)eventsGrid.SelectedItem;
+
+            long tk = (long)ee.WorkingTime;
+
+            TimeSpan ts = TimeSpan.FromTicks(tk);
+
+            label2.Content = ts.ToString();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace AppMonitor
         AppInfo currentProcess;
         //
         DateTime startTime = DateTime.Now;
+        //
+        Guid activeWindowGuid;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -80,14 +82,16 @@ namespace AppMonitor
 
         private void ApplicationFound(AppInfo ai, DateTime dt)
         {
+            activeWindowGuid = Guid.NewGuid();
+            //
             AddItem(ai, dt, false);
-            mon.AddApplicationEvent(Environment.MachineName, Environment.UserName, dt, true, 1, true, ai.AppTitle);
+            mon.AddApplicationEvent(Environment.MachineName, Environment.UserName, dt, true, WCF_Services.MonitorWCFServiceAppState.STARTED, true, activeWindowGuid.ToString(), ai.AppTitle);
         }
 
         private void ApplicationIsLost(AppInfo ai, DateTime dt)
         {
             AddItem(ai, dt, true);
-            mon.AddApplicationEvent(Environment.MachineName, Environment.UserName, dt, true, 0, true, ai.AppTitle);
+            mon.AddApplicationEvent(Environment.MachineName, Environment.UserName, dt, true, WCF_Services.MonitorWCFServiceAppState.CLOSED, true, activeWindowGuid.ToString(), ai.AppTitle);
         }
 
         private void AddItem(AppInfo ai, DateTime dt, bool isLost)

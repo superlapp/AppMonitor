@@ -14,21 +14,11 @@ namespace AppMonitorWCFService
         [OperationContract]
         string GetStatus();
 
-
-
-
-
-
         [OperationContract]
         List<Request> GetRequests();
 
-
-
-
-
-
         [OperationContract]
-        void AddApplicationEvent(string host, string user, DateTime eventDateTime, int state, string appTitle);
+        void AddApplicationEvent(string host, string user, DateTime eventDateTime, MonitorWCFService.AppState state, string guid, string appTitle);
 
         [OperationContract]
         List<string> GetHosts();

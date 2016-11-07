@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AppMonitorWCFService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="ArrayOfRequest">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Request" nillable="true" type="tns:Request" />
@@ -13,6 +14,25 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Request" nillable="true" type="tns:Request" />
+  <xs:simpleType name="MonitorWCFService.AppState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STARTED">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CLOSED">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MonitorWCFService.AppState" nillable="true" type="tns:MonitorWCFService.AppState" />
   <xs:complexType name="ArrayOfAppEvent">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="AppEvent" nillable="true" type="tns:AppEvent" />
@@ -22,11 +42,13 @@
   <xs:complexType name="AppEvent">
     <xs:sequence>
       <xs:element minOccurs="0" name="AppTitle" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EventDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DetectDT" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Guid" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Host" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="State" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IsLostDT" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WorkingTime" nillable="true" type="xs:long" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AppEvent" nillable="true" type="tns:AppEvent" />

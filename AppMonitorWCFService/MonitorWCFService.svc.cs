@@ -11,6 +11,11 @@ namespace AppMonitorWCFService
     public class MonitorWCFService : IMonitorWCFService
     {
         wcf_dbEntities db = new wcf_dbEntities();
+        public enum AppState
+        {
+            STARTED = 1,
+            CLOSED = 0
+        }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -53,17 +58,26 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public void AddApplicationEvent(string host, string user, DateTime eventDateTime, int state, string appTitle)
+        public void AddApplicationEvent(string host, string user, DateTime eventDateTime, AppState state, string guid, string appTitle)
         {
-            AppEvent ae = new AppEvent();
-            //
-            ae.Host = host;
-            ae.User = user;
-            ae.EventDateTime = eventDateTime;
-            ae.State = state;
-            ae.AppTitle = appTitle;
-            //
-            db.AppEvents.Add(ae);
+            if (state == AppState.STARTED)
+            {
+                AppEvent ae = new AppEvent();
+                ae.Host = host;
+                ae.User = user;
+                ae.Guid = guid;
+                ae.DetectDT = eventDateTime;
+                ae.AppTitle = appTitle;
+                db.AppEvents.Add(ae);
+            }
+            else
+            {
+                AppEvent ae = db.AppEvents.First(x => x.Host == host && x.User == user && x.Guid == guid);
+                TimeSpan ts = eventDateTime - ae.DetectDT;
+                //
+                ae.IsLostDT = eventDateTime;
+                ae.WorkingTime = ts.Ticks;
+            }
             //
             db.SaveChanges();
         }

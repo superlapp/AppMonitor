@@ -10,11 +10,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Host" Type="varchar" MaxLength="50" />
-          <Property Name="User" Type="varchar" MaxLength="50" />
-          <Property Name="EventDateTime" Type="datetime" />
-          <Property Name="State" Type="int" />
-          <Property Name="AppTitle" Type="varchar" MaxLength="50" />
+          <Property Name="Host" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="User" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Guid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DetectDT" Type="datetime" Nullable="false" />
+          <Property Name="IsLostDT" Type="datetime" />
+          <Property Name="AppTitle" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WorkingTime" Type="bigint" />
         </EntityType>
         <EntityType Name="IncomingRequests">
           <Key>
@@ -65,11 +67,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventDateTime" Type="DateTime" Precision="3" />
-          <Property Name="State" Type="Int32" />
-          <Property Name="AppTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DetectDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsLostDT" Type="DateTime" Precision="3" />
+          <Property Name="AppTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkingTime" Type="Int64" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -97,9 +101,11 @@
           <EntitySetMapping Name="AppEvents">
             <EntityTypeMapping TypeName="wcf_dbModel.AppEvent">
               <MappingFragment StoreEntitySet="AppEvents">
+                <ScalarProperty Name="WorkingTime" ColumnName="WorkingTime" />
                 <ScalarProperty Name="AppTitle" ColumnName="AppTitle" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="IsLostDT" ColumnName="IsLostDT" />
+                <ScalarProperty Name="DetectDT" ColumnName="DetectDT" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="User" ColumnName="User" />
                 <ScalarProperty Name="Host" ColumnName="Host" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

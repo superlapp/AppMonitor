@@ -17,8 +17,10 @@ namespace AppMonitorWCFService
         public int Id { get; set; }
         public string Host { get; set; }
         public string User { get; set; }
-        public Nullable<System.DateTime> EventDateTime { get; set; }
-        public Nullable<int> State { get; set; }
+        public string Guid { get; set; }
+        public System.DateTime DetectDT { get; set; }
+        public Nullable<System.DateTime> IsLostDT { get; set; }
         public string AppTitle { get; set; }
+        public Nullable<long> WorkingTime { get; set; }
     }
 }
