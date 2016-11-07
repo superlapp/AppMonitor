@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="481.5" Width="798.5" Activated="Window_Activated">
     <Grid>
-        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
+        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="getEventsBtn" Content="Get" HorizontalAlignment="Left" Margin="296,10,0,0" VerticalAlignment="Top" Width="200" Height="32" Click="getEventsBtn_Click"/>
-        <DataGrid x:Name="eventsGrid" Margin="10,47,10,10" SelectedCellsChanged="eventsGrid_SelectedCellsChanged"/>
+        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="215,41,0,0" VerticalAlignment="Top" Width="200" Height="24" Click="getEventsBtn_Click"/>
+        <DataGrid x:Name="eventsGrid" Margin="10,70,10,10" SelectedCellsChanged="eventsGrid_SelectedCellsChanged"/>
 
     </Grid>
 </Window>
