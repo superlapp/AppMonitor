@@ -1,26 +1,12 @@
 ﻿<Window x:Class="AppMonitorWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="365.5" Width="729.5" Activated="Window_Activated">
+        Title="MainWindow" Height="481.5" Width="798.5" Activated="Window_Activated">
     <Grid>
-        <Button x:Name="getResultBtn" Content="Get result" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="45" Click="getResultBtn_Click"/>
-        <Label x:Name="resultLabel" HorizontalAlignment="Left" Margin="135,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.311,-0.142" Height="46" Width="501"/>
-        <TabControl Margin="10,60,10,10">
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <Button x:Name="button" Content="Get requests" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="24" Click="button_Click"/>
-                    <DataGrid x:Name="eventsGrid" Margin="10,39,10,36" SelectedCellsChanged="eventsGrid_SelectedCellsChanged"/>
-                    <Button x:Name="getTestsButton" Content="Get tests" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" Click="getTestsButton_Click" Margin="135,10,0,0" Height="24"/>
-                    <Label x:Name="label2" Content="Label" Margin="10,0,10,5" Height="26" VerticalAlignment="Bottom"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <ListBox x:Name="testsListBox" Margin="10,37,10,10"/>
-                    <Button x:Name="stopTestBtn" Content="Stop tests" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="stopTestBtn_Click"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
+        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
+        <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="getEventsBtn" Content="Get" HorizontalAlignment="Left" Margin="296,10,0,0" VerticalAlignment="Top" Width="200" Height="32" Click="getEventsBtn_Click"/>
+        <DataGrid x:Name="eventsGrid" Margin="10,47,10,10" SelectedCellsChanged="eventsGrid_SelectedCellsChanged"/>
 
     </Grid>
 </Window>

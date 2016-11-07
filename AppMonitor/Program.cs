@@ -15,8 +15,7 @@ namespace AppMonitor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            new frmMain();
-            Application.Run();
+            Application.Run(new frmMain());
         }
     }
 }

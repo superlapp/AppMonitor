@@ -27,11 +27,11 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //BeginInvoke(new MethodInvoker(
-            //    delegate
-            //    {
-            //        Hide();
-            //    }));
+            BeginInvoke(new MethodInvoker(
+                delegate
+                {
+                    Hide();
+                }));
             StartMonitoring();
         }
 
@@ -54,7 +54,7 @@ namespace AppMonitor
             else
             {
                 w.StopMonitoring();
-                Application.Exit();
+                this.Close();
             }
         }
 

@@ -23,78 +23,48 @@ namespace AppMonitorWPF
     public partial class MainWindow : Window
     {
         AppMonitorWPF.WCF_Services.MonitorWCFService srv;
-
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         private void Window_Activated(object sender, EventArgs e)
         {
             srv = new AppMonitorWPF.WCF_Services.MonitorWCFService();
+            eventDatePicker.SelectedDate = DateTime.Today;
         }
-
-        private void getResultBtn_Click(object sender, RoutedEventArgs e)
-        {
-            resultLabel.Content = srv.GetStatus() + " at " + DateTime.Now.ToString();
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            //requestsListBox.Items.Clear();
-            //
-            List<WCF_Services.Request> rr = srv.GetRequests().ToList();
-            //
-            foreach (WCF_Services.Request r in rr)
-            {
-                //requestsListBox.Items.Add(r.RequestDateTime + " " + r.RequestText);
-            }
-        }
-
-        bool scan = false;
-
-        private void getTestsButton_Click(object sender, RoutedEventArgs e)
-        {
-            scan = true;
-            DoScan();
-        }
-
-        async private void DoScan()
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //async private void DoScan()
+        private void GetEvents()
         {
             try
             {
-                //while (scan == true)
-                //{
-                    List<WCF_Services.AppEvent> tt = srv.GetEvents().ToList();
+                List<WCF_Services.AppEvent> events = srv.GetEvents().Where(x => x.DetectDT >= eventDatePicker.SelectedDate).ToList();
 
-                //tt.a
+                //List<WCF_Services.AppEvent> events = srv.GetEvents().ToList();
 
-                    eventsGrid.ItemsSource = tt;
-
-                    //testsListBox.Items.Clear();
-
-                    //foreach (WCF_Services.AppEvent t in tt)
-                    //{
-                    //    testsListBox.Items.Add(
-                    //        t.EventDateTime.Value.ToLongTimeString() + " " + t.EventDateTime.Value.ToShortDateString() +
-                    //        t.State + " " + t.AppTitle);
-
-                    //    testsListBox.ScrollIntoView(t);
-                    //}
-                    //
-                    //await Task.Delay(200);
-                //}
+                eventsGrid.ItemsSource = events;
+                //
+                //await Task.Delay(200);
             }
             catch (Exception ex)
             {
-                scan = false;
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void stopTestBtn_Click(object sender, RoutedEventArgs e)
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        private void getEventsBtn_Click(object sender, RoutedEventArgs e)
         {
-            scan = false;
+            GetEvents();
         }
 
         private void eventsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -105,7 +75,7 @@ namespace AppMonitorWPF
 
             TimeSpan ts = TimeSpan.FromTicks(tk);
 
-            label2.Content = ts.ToString();
+            //label2.Content = ts.ToString();
         }
     }
 }
