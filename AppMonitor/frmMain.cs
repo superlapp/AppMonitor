@@ -27,16 +27,20 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         private void frmMain_Load(object sender, EventArgs e)
         {
+            //BeginInvoke(new MethodInvoker(
+            //    delegate
+            //    {
+            //        Hide();
+            //    }));
             StartMonitoring();
         }
 
         private void StartMonitoring()
         {
+            this.Hide();
             mon = new MonitorWCFService();
             w = new Worker(mon, listView1);
-            //
             w.StartMonitoring();
-            //
             timer1.Start();
         }
 
@@ -50,6 +54,7 @@ namespace AppMonitor
             else
             {
                 w.StopMonitoring();
+                Application.Exit();
             }
         }
 
@@ -88,5 +93,7 @@ namespace AppMonitor
                 }
             }
         }
+
+
     }
 }
