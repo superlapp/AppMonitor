@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using AppMonitor.WCF_Services;
 using System.Windows.Forms;
-using SharedClasses;
 
 namespace AppMonitor
 {
@@ -75,9 +74,16 @@ namespace AppMonitor
 
         public void StopMonitoring()
         {
-            AddItem(currentProcess, DateTime.Now, true);
-            ApplicationIsLost(currentProcess, DateTime.Now);
-            mon.Dispose();
+            try
+            {
+                AddItem(currentProcess, DateTime.Now, true);
+                ApplicationIsLost(currentProcess, DateTime.Now);
+                mon.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ApplicationFound(AppInfo ai, DateTime dt)

@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMonitorWCFService", "AppMonitorWCFService\AppMonitorWCFService.csproj", "{FC22E70B-2488-494B-ACAE-0AEDCB8AC5E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMonitorWPF", "AppMonitorWPF\AppMonitorWPF.csproj", "{426EBD1B-33D2-4BC2-9460-D5F9D47F0746}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMonitor", "AppMonitor\AppMonitor.csproj", "{59C0629D-0010-4C7E-8596-35E8B57CAE09}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedClasses", "SharedClasses\SharedClasses.csproj", "{21BB6127-35AB-465E-8A46-387C45B295D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{59C0629D-0010-4C7E-8596-35E8B57CAE09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59C0629D-0010-4C7E-8596-35E8B57CAE09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59C0629D-0010-4C7E-8596-35E8B57CAE09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21BB6127-35AB-465E-8A46-387C45B295D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21BB6127-35AB-465E-8A46-387C45B295D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21BB6127-35AB-465E-8A46-387C45B295D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21BB6127-35AB-465E-8A46-387C45B295D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

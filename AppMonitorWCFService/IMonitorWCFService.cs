@@ -12,7 +12,7 @@ namespace AppMonitorWCFService
     public interface IMonitorWCFService
     {
         [OperationContract]
-        string GetStatus();
+        bool IsAlive();
 
         [OperationContract]
         List<Request> GetRequests();

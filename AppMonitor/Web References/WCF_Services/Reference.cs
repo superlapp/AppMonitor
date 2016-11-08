@@ -23,13 +23,13 @@ namespace AppMonitor.WCF_Services {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="BasicHttpBinding_IMonitorWCFService", Namespace="http://tempuri.org/")]
     public partial class MonitorWCFService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
-        private System.Threading.SendOrPostCallback GetStatusOperationCompleted;
+        private System.Threading.SendOrPostCallback IsAliveOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetRequestsOperationCompleted;
         
@@ -82,7 +82,7 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        public event GetStatusCompletedEventHandler GetStatusCompleted;
+        public event IsAliveCompletedEventHandler IsAliveCompleted;
         
         /// <remarks/>
         public event GetRequestsCompletedEventHandler GetRequestsCompleted;
@@ -103,30 +103,30 @@ namespace AppMonitor.WCF_Services {
         public event GetEventsCompletedEventHandler GetEventsCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetStatus", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string GetStatus() {
-            object[] results = this.Invoke("GetStatus", new object[0]);
-            return ((string)(results[0]));
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/IsAlive", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void IsAlive(out bool IsAliveResult, [System.Xml.Serialization.XmlIgnoreAttribute()] out bool IsAliveResultSpecified) {
+            object[] results = this.Invoke("IsAlive", new object[0]);
+            IsAliveResult = ((bool)(results[0]));
+            IsAliveResultSpecified = ((bool)(results[1]));
         }
         
         /// <remarks/>
-        public void GetStatusAsync() {
-            this.GetStatusAsync(null);
+        public void IsAliveAsync() {
+            this.IsAliveAsync(null);
         }
         
         /// <remarks/>
-        public void GetStatusAsync(object userState) {
-            if ((this.GetStatusOperationCompleted == null)) {
-                this.GetStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetStatusOperationCompleted);
+        public void IsAliveAsync(object userState) {
+            if ((this.IsAliveOperationCompleted == null)) {
+                this.IsAliveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIsAliveOperationCompleted);
             }
-            this.InvokeAsync("GetStatus", new object[0], this.GetStatusOperationCompleted, userState);
+            this.InvokeAsync("IsAlive", new object[0], this.IsAliveOperationCompleted, userState);
         }
         
-        private void OnGetStatusOperationCompleted(object arg) {
-            if ((this.GetStatusCompleted != null)) {
+        private void OnIsAliveOperationCompleted(object arg) {
+            if ((this.IsAliveCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetStatusCompleted(this, new GetStatusCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.IsAliveCompleted(this, new IsAliveCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -343,7 +343,7 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -390,7 +390,7 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -553,7 +553,7 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(TypeName="MonitorWCFService.AppState", Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
     public enum MonitorWCFServiceAppState {
@@ -566,37 +566,45 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void GetStatusCompletedEventHandler(object sender, GetStatusCompletedEventArgs e);
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    public delegate void IsAliveCompletedEventHandler(object sender, IsAliveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class IsAliveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal IsAliveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
         /// <remarks/>
-        public string Result {
+        public bool IsAliveResult {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((bool)(this.results[0]));
+            }
+        }
+        
+        /// <remarks/>
+        public bool IsAliveResultSpecified {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[1]));
             }
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void GetRequestsCompletedEventHandler(object sender, GetRequestsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetRequestsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -618,15 +626,15 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void AddApplicationEventCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void GetHostsCompletedEventHandler(object sender, GetHostsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetHostsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -648,11 +656,11 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void GetUsersCompletedEventHandler(object sender, GetUsersCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetUsersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -674,11 +682,11 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void GetApplicationsCompletedEventHandler(object sender, GetApplicationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetApplicationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -700,11 +708,11 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void GetEventsCompletedEventHandler(object sender, GetEventsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetEventsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

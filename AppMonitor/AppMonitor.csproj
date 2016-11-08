@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppHelper.cs" />
+    <Compile Include="AppInfo.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,12 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
-      <Project>{21bb6127-35ab-465e-8a46-387c45b295d7}</Project>
-      <Name>SharedClasses</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WebReferenceUrl Include="http://localhost/AppMonitor/MonitorWCFService.svc">

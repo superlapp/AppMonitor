@@ -27,18 +27,40 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         private void frmMain_Load(object sender, EventArgs e)
         {
-            BeginInvoke(new MethodInvoker(
-                delegate
-                {
-                    Hide();
-                }));
-            StartMonitoring();
+            if (IsWCFAlive() == true)
+            {
+                statusLabel.Text = "Service connected";
+                //
+                //BeginInvoke(new MethodInvoker(
+                //    delegate
+                //    {
+                //        Hide();
+                //    }));
+                StartMonitoring();
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Service not available. Application will be closed.", "Information",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                canClose = true;
+                this.Close();
+            }
+        }
+
+        private bool IsWCFAlive()
+        {
+            statusLabel.Text = "Connecting to server...";
+            mon = new MonitorWCFService();
+            bool isAlive = false;
+            bool boolSpc = false;
+            mon.IsAlive(out isAlive, out boolSpc);
+            return isAlive;
         }
 
         private void StartMonitoring()
         {
             this.Hide();
-            mon = new MonitorWCFService();
             w = new Worker(mon, listView1);
             w.StartMonitoring();
             timer1.Start();
@@ -53,8 +75,10 @@ namespace AppMonitor
             }
             else
             {
-                w.StopMonitoring();
-                this.Close();
+                if (w != null)
+                {
+                    w.StopMonitoring();
+                }
             }
         }
 
