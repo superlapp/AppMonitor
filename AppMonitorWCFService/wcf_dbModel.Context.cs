@@ -26,5 +26,6 @@ namespace AppMonitorWCFService
         }
     
         public virtual DbSet<AppEvent> AppEvents { get; set; }
+        public virtual DbSet<C_Applications> C_Applications { get; set; }
     }
 }

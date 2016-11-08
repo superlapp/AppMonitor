@@ -99,6 +99,9 @@
       <DependentUpon>wcf_dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AppInfo.cs" />
+    <Compile Include="C_Applications.cs">
+      <DependentUpon>wcf_dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MonitorWCFService.svc.cs">
       <DependentUpon>MonitorWCFService.svc</DependentUpon>
     </Compile>

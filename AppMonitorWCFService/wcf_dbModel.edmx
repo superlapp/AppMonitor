@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="wcf_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="_Applications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="AppEvents">
           <Key>
             <PropertyRef Name="Id" />
@@ -19,6 +26,7 @@
           <Property Name="WorkingTime" Type="bigint" />
         </EntityType>
         <EntityContainer Name="wcf_dbModelStoreContainer">
+          <EntitySet Name="_Applications" EntityType="Self._Applications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppEvents" EntityType="Self.AppEvents" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -27,6 +35,7 @@
       <Schema Namespace="wcf_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="wcf_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppEvents" EntityType="wcf_dbModel.AppEvent" />
+          <EntitySet Name="C_Applications" EntityType="wcf_dbModel.C_Applications" />
         </EntityContainer>
         <EntityType Name="AppEvent">
           <Key>
@@ -40,6 +49,13 @@
           <Property Name="IsLostDT" Type="DateTime" Precision="3" />
           <Property Name="AppTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="WorkingTime" Type="Int64" />
+        </EntityType>
+        <EntityType Name="C_Applications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Caption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -57,6 +73,14 @@
                 <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="User" ColumnName="User" />
                 <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Applications">
+            <EntityTypeMapping TypeName="wcf_dbModel.C_Applications">
+              <MappingFragment StoreEntitySet="_Applications">
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
