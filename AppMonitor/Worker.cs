@@ -48,8 +48,8 @@ namespace AppMonitor
 
         public void Work()
         {
-            try
-            {
+            //try
+            //{
                 activeProcess = GetActiveAppInfo();
 
                 if (activeProcess.Id != 0)
@@ -65,11 +65,11 @@ namespace AppMonitor
                         currentProcess = activeProcess;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         public void StopMonitoring()

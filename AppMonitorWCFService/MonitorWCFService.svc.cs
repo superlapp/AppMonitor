@@ -40,9 +40,11 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         public void AddApplicationEvent(string host, string user, DateTime eventDateTime, AppState state, string guid, string appTitle)
         {
+            AppEvent ae;
+            //
             if (state == AppState.STARTED)
             {
-                AppEvent ae = new AppEvent();
+                ae = new AppEvent();
                 ae.Host = host;
                 ae.User = user;
                 ae.Guid = guid;
@@ -52,12 +54,25 @@ namespace AppMonitorWCFService
             }
             else
             {
-                AppEvent ae = db.AppEvents.First(x => x.Host == host && x.User == user && x.Guid == guid);
+                ae = db.AppEvents.First(x => x.Host == host && x.User == user && x.Guid == guid);
                 TimeSpan ts = eventDateTime - ae.DetectDT;
                 //
                 ae.IsLostDT = eventDateTime;
                 ae.WorkingTime = ts.Ticks;
             }
+            //
+
+            //System.IO.FileStream fs = new System.IO.FileStream(@"C:\AppTitles.txt", System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            //System.IO.StreamWriter sw = new System.IO.StreamWriter(fs);
+            //sw.WriteLine(appTitle);
+
+            //sw.Flush();
+            //sw.Close();
+            //sw.Dispose();
+
+            ////fs.Flush();
+            //fs.Close();
+            //fs.Dispose();
             //
             db.SaveChanges();
         }

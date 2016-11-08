@@ -8,6 +8,12 @@ namespace AppMonitor
     {
         IntPtr hwnd;
         AppInfo ai;
+        //
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -19,22 +25,18 @@ namespace AppMonitor
             Process p = Process.GetProcessById((int)pid);
             //
             ai = new AppInfo();
-            ai.Id = p.Id;
-            ai.AppTitle = (p.Id == 0) ? string.Empty : p.MainModule.FileVersionInfo.FileDescription;
-            ai.AppPath = (p.Id == 0) ? string.Empty : p.MainModule.FileName;
-            //
-            if (ai.AppTitle.Trim() == string.Empty)
+            if (p.Id == 0)
             {
-                ai.AppTitle = p.ProcessName;
+                ai = null;
+            }
+            else
+            {
+                ai.Id = p.Id;
+                ai.AppPath = p.MainModule.FileName;
+                ai.AppTitle = (p.MainModule.FileVersionInfo.FileDescription == null) ? p.ProcessName : p.MainModule.FileVersionInfo.FileDescription;
             }
             //
             return ai;
         }
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
     }
 }
