@@ -52,17 +52,20 @@ namespace AppMonitor
             //{
                 activeProcess = GetActiveAppInfo();
 
-                if (activeProcess.Id != 0)
+                if (activeProcess != null)
                 {
-                    //
-                    if (currentProcess.Id != activeProcess.Id)
+                    if (activeProcess.Id != 0)
                     {
-                        startTime = DateTime.Now;
                         //
-                        ApplicationIsLost(currentProcess, DateTime.Now);
-                        ApplicationFound(activeProcess, startTime);
-                        //
-                        currentProcess = activeProcess;
+                        if (currentProcess.Id != activeProcess.Id)
+                        {
+                            startTime = DateTime.Now;
+                            //
+                            ApplicationIsLost(currentProcess, DateTime.Now);
+                            ApplicationFound(activeProcess, startTime);
+                            //
+                            currentProcess = activeProcess;
+                        }
                     }
                 }
             //}

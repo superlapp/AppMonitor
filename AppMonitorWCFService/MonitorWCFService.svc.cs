@@ -61,18 +61,11 @@ namespace AppMonitorWCFService
                 ae.WorkingTime = ts.Ticks;
             }
             //
-
-            //System.IO.FileStream fs = new System.IO.FileStream(@"C:\AppTitles.txt", System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
-            //System.IO.StreamWriter sw = new System.IO.StreamWriter(fs);
-            //sw.WriteLine(appTitle);
-
-            //sw.Flush();
-            //sw.Close();
-            //sw.Dispose();
-
-            ////fs.Flush();
-            //fs.Close();
-            //fs.Dispose();
+            System.IO.StreamWriter dd = new System.IO.StreamWriter(@"C:\AppTitles.txt", true);
+            dd.WriteLine("NATIVE: " + state.ToString() + ": " + appTitle);
+            dd.WriteLine("ON_WCF: " + state.ToString() + ": " + ae.AppTitle);
+            dd.Flush();
+            dd.Close();
             //
             db.SaveChanges();
         }
