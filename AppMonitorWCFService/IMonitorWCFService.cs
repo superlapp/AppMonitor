@@ -15,9 +15,6 @@ namespace AppMonitorWCFService
         bool IsAlive();
 
         [OperationContract]
-        List<Request> GetRequests();
-
-        [OperationContract]
         void AddApplicationEvent(string host, string user, DateTime eventDateTime, MonitorWCFService.AppState state, string guid, string appTitle);
 
         [OperationContract]

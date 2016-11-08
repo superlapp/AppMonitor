@@ -10,69 +10,35 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Host" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="User" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Guid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DetectDT" Type="datetime" Nullable="false" />
           <Property Name="IsLostDT" Type="datetime" />
-          <Property Name="AppTitle" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="WorkingTime" Type="bigint" />
-        </EntityType>
-        <EntityType Name="IncomingRequests">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Request" Type="varchar(max)" Nullable="false" />
-          <Property Name="TimeOfReceiving" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tests">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MessageTxt" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityContainer Name="wcf_dbModelStoreContainer">
           <EntitySet Name="AppEvents" EntityType="Self.AppEvents" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IncomingRequests" EntityType="Self.IncomingRequests" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="wcf_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="wcf_dbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="IncomingRequests" EntityType="wcf_dbModel.IncomingRequest" />
-          <EntitySet Name="Tests" EntityType="wcf_dbModel.Test" />
           <EntitySet Name="AppEvents" EntityType="wcf_dbModel.AppEvent" />
         </EntityContainer>
-        <EntityType Name="IncomingRequest">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Request" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="TimeOfReceiving" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Test">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MessageTxt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="AppEvent">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DetectDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsLostDT" Type="DateTime" Precision="3" />
-          <Property Name="AppTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AppTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="WorkingTime" Type="Int64" />
         </EntityType>
       </Schema>
@@ -81,23 +47,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="wcf_dbModelStoreContainer" CdmEntityContainer="wcf_dbEntities">
-          <EntitySetMapping Name="IncomingRequests">
-            <EntityTypeMapping TypeName="wcf_dbModel.IncomingRequest">
-              <MappingFragment StoreEntitySet="IncomingRequests">
-                <ScalarProperty Name="TimeOfReceiving" ColumnName="TimeOfReceiving" />
-                <ScalarProperty Name="Request" ColumnName="Request" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tests">
-            <EntityTypeMapping TypeName="wcf_dbModel.Test">
-              <MappingFragment StoreEntitySet="Tests">
-                <ScalarProperty Name="MessageTxt" ColumnName="MessageTxt" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AppEvents">
             <EntityTypeMapping TypeName="wcf_dbModel.AppEvent">
               <MappingFragment StoreEntitySet="AppEvents">

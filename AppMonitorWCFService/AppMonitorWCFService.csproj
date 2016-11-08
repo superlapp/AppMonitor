@@ -99,18 +99,12 @@
       <DependentUpon>wcf_dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AppInfo.cs" />
-    <Compile Include="IncomingRequest.cs">
-      <DependentUpon>wcf_dbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="MonitorWCFService.svc.cs">
       <DependentUpon>MonitorWCFService.svc</DependentUpon>
     </Compile>
     <Compile Include="IMonitorWCFService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
-    <Compile Include="Test.cs">
-      <DependentUpon>wcf_dbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="wcf_dbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

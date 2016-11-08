@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AppMonitorWCFService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost/AppMonitor/MonitorWCFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="ArrayOfRequest">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Request" nillable="true" type="tns:Request" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfRequest" nillable="true" type="tns:ArrayOfRequest" />
-  <xs:complexType name="Request">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="RequestDateTime" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="RequestText" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Request" nillable="true" type="tns:Request" />
   <xs:simpleType name="MonitorWCFService.AppState">
     <xs:restriction base="xs:string">
       <xs:enumeration value="STARTED">

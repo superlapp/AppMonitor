@@ -25,8 +25,6 @@ namespace AppMonitorWCFService
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<IncomingRequest> IncomingRequests { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<AppEvent> AppEvents { get; set; }
     }
 }

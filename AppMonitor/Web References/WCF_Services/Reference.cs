@@ -31,8 +31,6 @@ namespace AppMonitor.WCF_Services {
         
         private System.Threading.SendOrPostCallback IsAliveOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetRequestsOperationCompleted;
-        
         private System.Threading.SendOrPostCallback AddApplicationEventOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetHostsOperationCompleted;
@@ -85,9 +83,6 @@ namespace AppMonitor.WCF_Services {
         public event IsAliveCompletedEventHandler IsAliveCompleted;
         
         /// <remarks/>
-        public event GetRequestsCompletedEventHandler GetRequestsCompleted;
-        
-        /// <remarks/>
         public event AddApplicationEventCompletedEventHandler AddApplicationEventCompleted;
         
         /// <remarks/>
@@ -127,35 +122,6 @@ namespace AppMonitor.WCF_Services {
             if ((this.IsAliveCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.IsAliveCompleted(this, new IsAliveCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetRequests", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
-        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
-        public Request[] GetRequests() {
-            object[] results = this.Invoke("GetRequests", new object[0]);
-            return ((Request[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetRequestsAsync() {
-            this.GetRequestsAsync(null);
-        }
-        
-        /// <remarks/>
-        public void GetRequestsAsync(object userState) {
-            if ((this.GetRequestsOperationCompleted == null)) {
-                this.GetRequestsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetRequestsOperationCompleted);
-            }
-            this.InvokeAsync("GetRequests", new object[0], this.GetRequestsOperationCompleted, userState);
-        }
-        
-        private void OnGetRequestsOperationCompleted(object arg) {
-            if ((this.GetRequestsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetRequestsCompleted(this, new GetRequestsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -345,48 +311,14 @@ namespace AppMonitor.WCF_Services {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
-    public partial class Request {
-        
-        private System.DateTime requestDateTimeField;
-        
-        private bool requestDateTimeFieldSpecified;
-        
-        private string requestTextField;
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="MonitorWCFService.AppState", Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public enum MonitorWCFServiceAppState {
         
         /// <remarks/>
-        public System.DateTime RequestDateTime {
-            get {
-                return this.requestDateTimeField;
-            }
-            set {
-                this.requestDateTimeField = value;
-            }
-        }
+        STARTED,
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool RequestDateTimeSpecified {
-            get {
-                return this.requestDateTimeFieldSpecified;
-            }
-            set {
-                this.requestDateTimeFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string RequestText {
-            get {
-                return this.requestTextField;
-            }
-            set {
-                this.requestTextField = value;
-            }
-        }
+        CLOSED,
     }
     
     /// <remarks/>
@@ -553,19 +485,6 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="MonitorWCFService.AppState", Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
-    public enum MonitorWCFServiceAppState {
-        
-        /// <remarks/>
-        STARTED,
-        
-        /// <remarks/>
-        CLOSED,
-    }
-    
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void IsAliveCompletedEventHandler(object sender, IsAliveCompletedEventArgs e);
     
@@ -595,32 +514,6 @@ namespace AppMonitor.WCF_Services {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[1]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
-    public delegate void GetRequestsCompletedEventHandler(object sender, GetRequestsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetRequestsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetRequestsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Request[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Request[])(this.results[0]));
             }
         }
     }

@@ -23,18 +23,6 @@ namespace AppMonitorWCFService
         {
             return true;
         }
-
-        public List<Request> GetRequests()
-        {
-            List<Request> requests = new List<Request>();
-            //
-            foreach (IncomingRequest ir in db.IncomingRequests)
-            {
-                requests.Add(new Request(ir.TimeOfReceiving, ir.Request));
-            }
-            //
-            return requests;
-        }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
