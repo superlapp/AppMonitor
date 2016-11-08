@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SharedClasses;
 
 namespace AppMonitorWPF
 {
@@ -44,20 +43,33 @@ namespace AppMonitorWPF
         //async private void DoScan()
         private void GetEvents()
         {
-            try
-            {
-                List<WCF_Services.AppEvent> events = srv.GetEvents().Where(x => x.DetectDT >= eventDatePicker.SelectedDate).ToList();
-
-                //List<WCF_Services.AppEvent> events = srv.GetEvents().ToList();
-
+            //try
+            //{
+                List<WCF_Services.AppEvent> events = srv.GetEvents().Where(x => x.DetectDT >= eventDatePicker.SelectedDate && x.WorkingTime != null).ToList();
+                //
+                foreach (WCF_Services.AppEvent ev in events)
+                {
+                    long tk = (long)ev.WorkingTime;
+                    TimeSpan ts = TimeSpan.FromTicks(tk);
+                    string frmt = @"hh\:mm\:ss";
+                    string wt = ts.ToString(frmt);
+                    //
+                    ReportItem ri = new ReportItem();
+                    ri.EventDate = ev.DetectDT;
+                    ri.ApplicationTitle = ev.AppTitle;
+                    ri.WorkingTime = wt;
+                    //
+                    reportListView.Items.Add(ri);
+                }
+                //
                 eventsGrid.ItemsSource = events;
                 //
                 //await Task.Delay(200);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -70,12 +82,8 @@ namespace AppMonitorWPF
         private void eventsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             WCF_Services.AppEvent ee = (WCF_Services.AppEvent)eventsGrid.SelectedItem;
-
             long tk = (long)ee.WorkingTime;
-
             TimeSpan ts = TimeSpan.FromTicks(tk);
-
-            //label2.Content = ts.ToString();
         }
     }
 }

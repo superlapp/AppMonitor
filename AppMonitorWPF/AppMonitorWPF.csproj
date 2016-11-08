@@ -36,6 +36,9 @@
   <PropertyGroup>
     <StartupObject>AppMonitorWPF.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>appIconWPF.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -58,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ReportItem.cs" />
     <Compile Include="Web References\WCF_Services\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -137,10 +141,6 @@
       <Project>{fc22e70b-2488-494b-acae-0aedcb8ac5e0}</Project>
       <Name>AppMonitorWCFService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
-      <Project>{21bb6127-35ab-465e-8a46-387c45b295d7}</Project>
-      <Name>SharedClasses</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WebReferenceUrl Include="http://localhost/AppMonitor/MonitorWCFService.svc">
@@ -157,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\WCF_Services\MonitorWCFService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="appIconWPF.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
