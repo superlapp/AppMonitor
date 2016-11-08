@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace AppMonitor
 {
     class AppHelper
     {
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
         IntPtr hwnd;
-
         AppInfo ai;
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -30,15 +20,21 @@ namespace AppMonitor
             //
             ai = new AppInfo();
             ai.Id = p.Id;
-            ai.AppTitle = (p.Id == 0) ? "" : p.MainModule.FileVersionInfo.FileDescription;
-            ai.AppPath = (p.Id == 0) ? "" : p.MainModule.FileName;
+            ai.AppTitle = (p.Id == 0) ? string.Empty : p.MainModule.FileVersionInfo.FileDescription;
+            ai.AppPath = (p.Id == 0) ? string.Empty : p.MainModule.FileName;
             //
-            if (ai.AppTitle.Trim() == "")
+            if (ai.AppTitle.Trim() == string.Empty)
             {
                 ai.AppTitle = p.ProcessName;
             }
             //
             return ai;
         }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
     }
 }

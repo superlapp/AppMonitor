@@ -52,6 +52,7 @@ namespace AppMonitor
         {
             statusLabel.Text = "Connecting to server...";
             mon = new MonitorWCFService();
+            Application.DoEvents();
             bool isAlive = false;
             bool boolSpc = false;
             mon.IsAlive(out isAlive, out boolSpc);
@@ -60,7 +61,6 @@ namespace AppMonitor
 
         private void StartMonitoring()
         {
-            this.Hide();
             w = new Worker(mon, listView1);
             w.StartMonitoring();
             timer1.Start();
