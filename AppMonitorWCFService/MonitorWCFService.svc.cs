@@ -49,11 +49,11 @@ namespace AppMonitorWCFService
                 ae.WorkingTime = ts.Ticks;
             }
             //
-            System.IO.StreamWriter dd = new System.IO.StreamWriter(@"C:\AppTitles.txt", true);
-            dd.WriteLine("NATIVE: " + state.ToString() + ": " + appTitle);
-            dd.WriteLine("ON_WCF: " + state.ToString() + ": " + ae.AppTitle);
-            dd.Flush();
-            dd.Close();
+            //System.IO.StreamWriter dd = new System.IO.StreamWriter(@"C:\AppTitles.txt", true);
+            //dd.WriteLine("NATIVE: " + state.ToString() + ": " + appTitle);
+            //dd.WriteLine("ON_WCF: " + state.ToString() + ": " + ae.AppTitle);
+            //dd.Flush();
+            //dd.Close();
             //
             db.SaveChanges();
         }
