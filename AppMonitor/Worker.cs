@@ -11,8 +11,8 @@ namespace AppMonitor
     {
         ListView lv;
         MonitorWCFService mon;
-        AppInfo activeProcess;
-        AppInfo currentProcess;
+        AppInfo activeProcess = null;
+        AppInfo currentProcess = null;
         //
         DateTime startTime = DateTime.Now;
         //
@@ -30,20 +30,20 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         public void StartMonitoring()
         {
-            try
-            {
+            //try
+            //{
                 lv.Items.Clear();
 
                 activeProcess = GetActiveAppInfo();
-                startTime = DateTime.Now;
+                
                 ApplicationFound(activeProcess, startTime);
                 //
                 currentProcess = activeProcess;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         public void Work()
@@ -77,16 +77,16 @@ namespace AppMonitor
 
         public void StopMonitoring()
         {
-            try
-            {
+            //try
+            //{
                 AddItem(currentProcess, DateTime.Now, true);
                 ApplicationIsLost(currentProcess, DateTime.Now);
                 mon.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void ApplicationFound(AppInfo ai, DateTime dt)
