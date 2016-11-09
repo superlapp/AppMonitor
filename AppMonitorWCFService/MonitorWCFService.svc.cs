@@ -40,26 +40,26 @@ namespace AppMonitorWCFService
                 ev.AppTitle = appTitle;
                 db.dbEvents.Add(ev);
                 //
-                dbHost hs = db.dbHosts.First(x => x.Caption == host);
-                if (hs == null)
+                long cnt = db.dbHosts.LongCount(x => x.Caption == host);
+                if (cnt == 0)
                 {
-                    hs = new dbHost();
+                    dbHost hs = new dbHost();
                     hs.Caption = host;
                     db.dbHosts.Add(hs);
                 }
 
-                dbUser usr = db.dbUsers.First(x => x.Caption == user);
-                if (usr == null)
+                cnt = db.dbUsers.LongCount(x => x.Caption == user);
+                if (cnt == 0)
                 {
-                    usr = new dbUser();
+                    dbUser usr = new dbUser();
                     usr.Caption = host;
                     db.dbUsers.Add(usr);
                 }
 
-                dbApplication ap = db.dbApplications.First(x => x.Caption == appTitle);
-                if (ap == null)
+                cnt = db.dbApplications.LongCount(x => x.Caption == appTitle);
+                if (cnt == 0)
                 {
-                    ap = new dbApplication();
+                    dbApplication ap = new dbApplication();
                     ap.Caption = appTitle;
                     db.dbApplications.Add(ap);
                 }
