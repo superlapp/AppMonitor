@@ -9,7 +9,7 @@
         <TabControl Margin="10,70,10,10">
             <TabItem Header="Report">
                 <Grid Background="#FFE5E5E5">
-                    <ListView x:Name="reportListView" HorizontalAlignment="Left" Height="320" Margin="10,10,0,0" VerticalAlignment="Top" Width="740">
+                    <ListView x:Name="reportListView" Margin="10">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Date"

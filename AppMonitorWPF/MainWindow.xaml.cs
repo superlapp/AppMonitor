@@ -43,64 +43,45 @@ namespace AppMonitorWPF
         //async private void DoScan()
         private void GetEvents()
         {
-            //try
-            //{
-
-            reportListView.Items.Clear();
-
-            List<WCF_Services.dbEvent> events = srv.GetEvents().Where(x => x.DetectDT >= eventDatePicker.SelectedDate && x.WorkingTime != null).ToList();
-
-            List<WCF_Services.dbApplication> apps = srv.GetApplications("", "").ToList();
-            foreach (WCF_Services.dbApplication app in apps)
+            try
             {
-                List<WCF_Services.dbEvent> e2 = events.FindAll(x => x.AppTitle == app.Caption);
-
                 long tk = 0;
-
-                foreach (WCF_Services.dbEvent ev in e2)
-                {
-                    tk = tk + (long)ev.WorkingTime;
-                }
-
-                TimeSpan ts = TimeSpan.FromTicks(tk);
                 string frmt = @"hh\:mm\:ss";
-                string wt = ts.ToString(frmt);
-
-                ReportItem ri = new ReportItem();
-                ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
-                ri.ApplicationTitle = app.Caption;
-                ri.WorkingTime = wt;
-
-                reportListView.Items.Add(ri);
-                
-            }
-
-            eventsGrid.ItemsSource = events;
-                
+                string workingTime = "";
+                reportListView.Items.Clear();
                 //
-                //foreach (WCF_Services.dbEvent ev in events)
-                //{
-                //    long tk = (long)ev.WorkingTime;
-                //    TimeSpan ts = TimeSpan.FromTicks(tk);
-                //    string frmt = @"hh\:mm\:ss";
-                //    string wt = ts.ToString(frmt);
-                //    //
-                //    ReportItem ri = new ReportItem();
-                //    ri.EventDate = ev.DetectDT;
-                //    ri.ApplicationTitle = ev.AppTitle;
-                //    ri.WorkingTime = wt;
-                //    //
-                //    reportListView.Items.Add(ri);
-                //}
+                List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(
+                    x => x.DetectDT >= eventDatePicker.SelectedDate && x.WorkingTime != null).ToList();
                 //
-                //eventsGrid.ItemsSource = events;
+                List<WCF_Services.dbApplication> apps = srv.GetApplications("", "").ToList();
+                foreach (WCF_Services.dbApplication app in apps)
+                {
+                    List<WCF_Services.dbEvent> evsPerApp = evs.FindAll(x => x.AppTitle == app.Caption);
+                    //
+                    tk = 0;
+                    foreach (WCF_Services.dbEvent ev in evsPerApp)
+                    {
+                        tk = tk + (long)ev.WorkingTime;
+                    }
+                    TimeSpan ts = TimeSpan.FromTicks(tk);
+                    workingTime = ts.ToString(frmt);
+                    //
+                    ReportItem ri = new ReportItem();
+                    ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
+                    ri.ApplicationTitle = app.Caption;
+                    ri.WorkingTime = workingTime;
+                    //
+                    reportListView.Items.Add(ri);
+                }
+                //
+                eventsGrid.ItemsSource = evs;
                 //
                 //await Task.Delay(200);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
