@@ -95,11 +95,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppEvent.cs">
+    <Compile Include="AppInfo.cs" />
+    <Compile Include="dbApplication.cs">
       <DependentUpon>wcf_dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="AppInfo.cs" />
-    <Compile Include="C_Applications.cs">
+    <Compile Include="dbEvent.cs">
+      <DependentUpon>wcf_dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbHost.cs">
+      <DependentUpon>wcf_dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbUser.cs">
       <DependentUpon>wcf_dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MonitorWCFService.svc.cs">

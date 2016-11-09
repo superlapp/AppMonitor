@@ -45,9 +45,9 @@ namespace AppMonitorWPF
         {
             //try
             //{
-                List<WCF_Services.AppEvent> events = srv.GetEvents().Where(x => x.DetectDT >= eventDatePicker.SelectedDate && x.WorkingTime != null).ToList();
+                List<WCF_Services.dbEvent> events = srv.GetEvents().Where(x => x.DetectDT >= eventDatePicker.SelectedDate && x.WorkingTime != null).ToList();
                 //
-                foreach (WCF_Services.AppEvent ev in events)
+                foreach (WCF_Services.dbEvent ev in events)
                 {
                     long tk = (long)ev.WorkingTime;
                     TimeSpan ts = TimeSpan.FromTicks(tk);
@@ -81,7 +81,7 @@ namespace AppMonitorWPF
 
         private void eventsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            WCF_Services.AppEvent ee = (WCF_Services.AppEvent)eventsGrid.SelectedItem;
+            WCF_Services.dbEvent ee = (WCF_Services.dbEvent)eventsGrid.SelectedItem;
             long tk = (long)ee.WorkingTime;
             TimeSpan ts = TimeSpan.FromTicks(tk);
         }

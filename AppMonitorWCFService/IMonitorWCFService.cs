@@ -18,15 +18,15 @@ namespace AppMonitorWCFService
         void AddApplicationEvent(string host, string user, DateTime eventDateTime, MonitorWCFService.AppState state, string guid, string appTitle);
 
         [OperationContract]
-        List<string> GetHosts();
+        List<dbHost> GetHosts();
 
         [OperationContract]
-        List<string> GetUsers(string host);
+        List<dbUser> GetUsers(string host);
 
         [OperationContract]
-        List<string> GetApplications(string host, string users);
+        List<dbApplication> GetApplications(string host, string user);
 
         [OperationContract]
-        List<AppEvent> GetEvents();
+        List<dbEvent> GetEvents();
     }
 }

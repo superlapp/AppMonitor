@@ -170,10 +170,10 @@ namespace AppMonitor.WCF_Services {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetHosts", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
-        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
-        public string[] GetHosts() {
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+        public dbHost[] GetHosts() {
             object[] results = this.Invoke("GetHosts", new object[0]);
-            return ((string[])(results[0]));
+            return ((dbHost[])(results[0]));
         }
         
         /// <remarks/>
@@ -199,11 +199,11 @@ namespace AppMonitor.WCF_Services {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetUsers", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
-        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
-        public string[] GetUsers([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host) {
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+        public dbUser[] GetUsers([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host) {
             object[] results = this.Invoke("GetUsers", new object[] {
                         host});
-            return ((string[])(results[0]));
+            return ((dbUser[])(results[0]));
         }
         
         /// <remarks/>
@@ -230,27 +230,27 @@ namespace AppMonitor.WCF_Services {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetApplications", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
-        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
-        public string[] GetApplications([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string users) {
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+        public dbApplication[] GetApplications([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string host, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] string user) {
             object[] results = this.Invoke("GetApplications", new object[] {
                         host,
-                        users});
-            return ((string[])(results[0]));
+                        user});
+            return ((dbApplication[])(results[0]));
         }
         
         /// <remarks/>
-        public void GetApplicationsAsync(string host, string users) {
-            this.GetApplicationsAsync(host, users, null);
+        public void GetApplicationsAsync(string host, string user) {
+            this.GetApplicationsAsync(host, user, null);
         }
         
         /// <remarks/>
-        public void GetApplicationsAsync(string host, string users, object userState) {
+        public void GetApplicationsAsync(string host, string user, object userState) {
             if ((this.GetApplicationsOperationCompleted == null)) {
                 this.GetApplicationsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetApplicationsOperationCompleted);
             }
             this.InvokeAsync("GetApplications", new object[] {
                         host,
-                        users}, this.GetApplicationsOperationCompleted, userState);
+                        user}, this.GetApplicationsOperationCompleted, userState);
         }
         
         private void OnGetApplicationsOperationCompleted(object arg) {
@@ -264,9 +264,9 @@ namespace AppMonitor.WCF_Services {
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IMonitorWCFService/GetEvents", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
         [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
-        public AppEvent[] GetEvents() {
+        public dbEvent[] GetEvents() {
             object[] results = this.Invoke("GetEvents", new object[0]);
-            return ((AppEvent[])(results[0]));
+            return ((dbEvent[])(results[0]));
         }
         
         /// <remarks/>
@@ -327,7 +327,54 @@ namespace AppMonitor.WCF_Services {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
-    public partial class AppEvent {
+    public partial class dbHost {
+        
+        private string captionField;
+        
+        private int idField;
+        
+        private bool idFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string Caption {
+            get {
+                return this.captionField;
+            }
+            set {
+                this.captionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IdSpecified {
+            get {
+                return this.idFieldSpecified;
+            }
+            set {
+                this.idFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public partial class dbEvent {
         
         private string appTitleField;
         
@@ -485,6 +532,100 @@ namespace AppMonitor.WCF_Services {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public partial class dbApplication {
+        
+        private string captionField;
+        
+        private int idField;
+        
+        private bool idFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string Caption {
+            get {
+                return this.captionField;
+            }
+            set {
+                this.captionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IdSpecified {
+            get {
+                return this.idFieldSpecified;
+            }
+            set {
+                this.idFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/AppMonitorWCFService")]
+    public partial class dbUser {
+        
+        private string captionField;
+        
+        private int idField;
+        
+        private bool idFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string Caption {
+            get {
+                return this.captionField;
+            }
+            set {
+                this.captionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IdSpecified {
+            get {
+                return this.idFieldSpecified;
+            }
+            set {
+                this.idFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
     public delegate void IsAliveCompletedEventHandler(object sender, IsAliveCompletedEventArgs e);
     
@@ -540,10 +681,10 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        public string[] Result {
+        public dbHost[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string[])(this.results[0]));
+                return ((dbHost[])(this.results[0]));
             }
         }
     }
@@ -566,10 +707,10 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        public string[] Result {
+        public dbUser[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string[])(this.results[0]));
+                return ((dbUser[])(this.results[0]));
             }
         }
     }
@@ -592,10 +733,10 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        public string[] Result {
+        public dbApplication[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string[])(this.results[0]));
+                return ((dbApplication[])(this.results[0]));
             }
         }
     }
@@ -618,10 +759,10 @@ namespace AppMonitor.WCF_Services {
         }
         
         /// <remarks/>
-        public AppEvent[] Result {
+        public dbEvent[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((AppEvent[])(this.results[0]));
+                return ((dbEvent[])(this.results[0]));
             }
         }
     }

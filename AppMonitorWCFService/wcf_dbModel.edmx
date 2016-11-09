@@ -5,14 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="wcf_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="_Applications">
+        <EntityType Name="dbApplications">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Caption" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="AppEvents">
+        <EntityType Name="dbEvents">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -25,19 +25,44 @@
           <Property Name="AppTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="WorkingTime" Type="bigint" />
         </EntityType>
+        <EntityType Name="dbHosts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="wcf_dbModelStoreContainer">
-          <EntitySet Name="_Applications" EntityType="Self._Applications" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AppEvents" EntityType="Self.AppEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbApplications" EntityType="Self.dbApplications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbEvents" EntityType="Self.dbEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbHosts" EntityType="Self.dbHosts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbUsers" EntityType="Self.dbUsers" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="wcf_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="wcf_dbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AppEvents" EntityType="wcf_dbModel.AppEvent" />
-          <EntitySet Name="C_Applications" EntityType="wcf_dbModel.C_Applications" />
+          <EntitySet Name="dbApplications" EntityType="wcf_dbModel.dbApplication" />
+          <EntitySet Name="dbEvents" EntityType="wcf_dbModel.dbEvent" />
+          <EntitySet Name="dbHosts" EntityType="wcf_dbModel.dbHost" />
+          <EntitySet Name="dbUsers" EntityType="wcf_dbModel.dbUser" />
         </EntityContainer>
-        <EntityType Name="AppEvent">
+        <EntityType Name="dbApplication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Caption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="dbEvent">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -50,7 +75,14 @@
           <Property Name="AppTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="WorkingTime" Type="Int64" />
         </EntityType>
-        <EntityType Name="C_Applications">
+        <EntityType Name="dbHost">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Caption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="dbUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -63,9 +95,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="wcf_dbModelStoreContainer" CdmEntityContainer="wcf_dbEntities">
-          <EntitySetMapping Name="AppEvents">
-            <EntityTypeMapping TypeName="wcf_dbModel.AppEvent">
-              <MappingFragment StoreEntitySet="AppEvents">
+          <EntitySetMapping Name="dbApplications">
+            <EntityTypeMapping TypeName="wcf_dbModel.dbApplication">
+              <MappingFragment StoreEntitySet="dbApplications">
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbEvents">
+            <EntityTypeMapping TypeName="wcf_dbModel.dbEvent">
+              <MappingFragment StoreEntitySet="dbEvents">
                 <ScalarProperty Name="WorkingTime" ColumnName="WorkingTime" />
                 <ScalarProperty Name="AppTitle" ColumnName="AppTitle" />
                 <ScalarProperty Name="IsLostDT" ColumnName="IsLostDT" />
@@ -77,9 +117,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="C_Applications">
-            <EntityTypeMapping TypeName="wcf_dbModel.C_Applications">
-              <MappingFragment StoreEntitySet="_Applications">
+          <EntitySetMapping Name="dbHosts">
+            <EntityTypeMapping TypeName="wcf_dbModel.dbHost">
+              <MappingFragment StoreEntitySet="dbHosts">
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbUsers">
+            <EntityTypeMapping TypeName="wcf_dbModel.dbUser">
+              <MappingFragment StoreEntitySet="dbUsers">
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

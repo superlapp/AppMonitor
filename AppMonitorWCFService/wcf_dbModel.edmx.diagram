@@ -5,8 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3b7562b9c7dc4d76ab8716b71b0a1d20" Name="Diagram1">
-        <EntityTypeShape EntityType="wcf_dbModel.AppEvent" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="wcf_dbModel.C_Applications" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbApplication" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbEvent" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbHost" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbUser" Width="1.5" PointX="7.75" PointY="2.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

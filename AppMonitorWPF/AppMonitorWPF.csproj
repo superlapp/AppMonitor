@@ -104,7 +104,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Web References\WCF_Services\AppEvent.datasource">
+    <None Include="Web References\WCF_Services\dbApplication.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\WCF_Services\dbEvent.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\WCF_Services\dbHost.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\WCF_Services\dbUser.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\WCF_Services\MonitorWCFService.wsdl" />
@@ -115,9 +124,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Web References\WCF_Services\MonitorWCFService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Web References\WCF_Services\MonitorWCFService2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web References\WCF_Services\Reference.map">

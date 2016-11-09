@@ -25,7 +25,9 @@ namespace AppMonitorWCFService
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AppEvent> AppEvents { get; set; }
-        public virtual DbSet<C_Applications> C_Applications { get; set; }
+        public virtual DbSet<dbApplication> dbApplications { get; set; }
+        public virtual DbSet<dbEvent> dbEvents { get; set; }
+        public virtual DbSet<dbHost> dbHosts { get; set; }
+        public virtual DbSet<dbUser> dbUsers { get; set; }
     }
 }

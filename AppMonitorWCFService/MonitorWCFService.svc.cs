@@ -28,65 +28,84 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         public void AddApplicationEvent(string host, string user, DateTime eventDateTime, AppState state, string guid, string appTitle)
         {
-            AppEvent ae;
+            dbEvent ev;
             //
             if (state == AppState.STARTED)
             {
-                ae = new AppEvent();
-                ae.Host = host;
-                ae.User = user;
-                ae.Guid = guid;
-                ae.DetectDT = eventDateTime;
-                ae.AppTitle = appTitle;
-                db.AppEvents.Add(ae);
+                ev = new dbEvent();
+                ev.Host = host;
+                ev.User = user;
+                ev.Guid = guid;
+                ev.DetectDT = eventDateTime;
+                ev.AppTitle = appTitle;
+                db.dbEvents.Add(ev);
+                //
+                dbHost hs = db.dbHosts.First(x => x.Caption == host);
+                if (hs == null)
+                {
+                    hs = new dbHost();
+                    hs.Caption = host;
+                    db.dbHosts.Add(hs);
+                }
+
+                dbUser usr = db.dbUsers.First(x => x.Caption == user);
+                if (usr == null)
+                {
+                    usr = new dbUser();
+                    usr.Caption = host;
+                    db.dbUsers.Add(usr);
+                }
+
+                dbApplication ap = db.dbApplications.First(x => x.Caption == appTitle);
+                if (ap == null)
+                {
+                    ap = new dbApplication();
+                    ap.Caption = appTitle;
+                    db.dbApplications.Add(ap);
+                }
             }
             else
             {
-                ae = db.AppEvents.First(x => x.Host == host && x.User == user && x.Guid == guid);
-                TimeSpan ts = eventDateTime - ae.DetectDT;
+                ev = db.dbEvents.First(x => x.Host == host && x.User == user && x.Guid == guid);
+                TimeSpan ts = eventDateTime - ev.DetectDT;
                 //
-                ae.IsLostDT = eventDateTime;
-                ae.WorkingTime = ts.Ticks;
+                ev.IsLostDT = eventDateTime;
+                ev.WorkingTime = ts.Ticks;
             }
-            //
-            //System.IO.StreamWriter dd = new System.IO.StreamWriter(@"C:\AppTitles.txt", true);
-            //dd.WriteLine("NATIVE: " + state.ToString() + ": " + appTitle);
-            //dd.WriteLine("ON_WCF: " + state.ToString() + ": " + ae.AppTitle);
-            //dd.Flush();
-            //dd.Close();
             //
             db.SaveChanges();
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public List<string> GetHosts()
+        public List<dbHost> GetHosts()
         {
             List<string> hosts = new List<string>();
             //
             //
-            return hosts;
+            return db.dbHosts.ToList();
         }
 
-        public List<string> GetUsers(string host)
+        public List<dbUser> GetUsers(string host)
         {
-            List<string> users = new List<string>();
+            //List<string> users = new List<string>();
             //
             //
-            return users;
+            return db.dbUsers.ToList();
         }
 
-        public List<string> GetApplications(string host, string users)
+        public List<dbApplication> GetApplications(string host, string user)
         {
-            List<string> apps = new List<string>();
+            //List<dbApplication> aps = new List<dbApplication>();
             //
+
             //
-            return apps;
+            return db.dbApplications.ToList();
         }
 
-        public List<AppEvent> GetEvents()
+        public List<dbEvent> GetEvents()
         {
-            return db.AppEvents.ToList();
+            return db.dbEvents.ToList();
         }
     }
 }

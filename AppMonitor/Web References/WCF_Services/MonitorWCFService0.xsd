@@ -20,13 +20,52 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="MonitorWCFService.AppState" nillable="true" type="tns:MonitorWCFService.AppState" />
-  <xs:complexType name="ArrayOfAppEvent">
+  <xs:complexType name="ArrayOfdbHost">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="AppEvent" nillable="true" type="tns:AppEvent" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="dbHost" nillable="true" type="tns:dbHost" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfAppEvent" nillable="true" type="tns:ArrayOfAppEvent" />
-  <xs:complexType name="AppEvent">
+  <xs:element name="ArrayOfdbHost" nillable="true" type="tns:ArrayOfdbHost" />
+  <xs:complexType name="dbHost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Caption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="dbHost" nillable="true" type="tns:dbHost" />
+  <xs:complexType name="ArrayOfdbUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="dbUser" nillable="true" type="tns:dbUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfdbUser" nillable="true" type="tns:ArrayOfdbUser" />
+  <xs:complexType name="dbUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Caption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="dbUser" nillable="true" type="tns:dbUser" />
+  <xs:complexType name="ArrayOfdbApplication">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="dbApplication" nillable="true" type="tns:dbApplication" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfdbApplication" nillable="true" type="tns:ArrayOfdbApplication" />
+  <xs:complexType name="dbApplication">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Caption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="dbApplication" nillable="true" type="tns:dbApplication" />
+  <xs:complexType name="ArrayOfdbEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="dbEvent" nillable="true" type="tns:dbEvent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfdbEvent" nillable="true" type="tns:ArrayOfdbEvent" />
+  <xs:complexType name="dbEvent">
     <xs:sequence>
       <xs:element minOccurs="0" name="AppTitle" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DetectDT" type="xs:dateTime" />
@@ -38,5 +77,5 @@
       <xs:element minOccurs="0" name="WorkingTime" nillable="true" type="xs:long" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="AppEvent" nillable="true" type="tns:AppEvent" />
+  <xs:element name="dbEvent" nillable="true" type="tns:dbEvent" />
 </xs:schema>
