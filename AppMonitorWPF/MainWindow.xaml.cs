@@ -48,10 +48,11 @@ namespace AppMonitorWPF
                 long tk = 0;
                 string frmt = @"hh\:mm\:ss";
                 string workingTime = "";
+
                 reportListView.Items.Clear();
+
                 //
-                List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(
-                    x => x.DetectDT >= eventDatePicker.SelectedDate && x.WorkingTime != null).ToList();
+                List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == eventDatePicker.SelectedDate.Value.ToShortDateString() && x.WorkingTime != null).ToList();
                 //
                 List<WCF_Services.dbApplication> apps = srv.GetApplications("", "").ToList();
                 foreach (WCF_Services.dbApplication app in apps)
@@ -66,12 +67,15 @@ namespace AppMonitorWPF
                     TimeSpan ts = TimeSpan.FromTicks(tk);
                     workingTime = ts.ToString(frmt);
                     //
-                    ReportItem ri = new ReportItem();
-                    ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
-                    ri.ApplicationTitle = app.Caption;
-                    ri.WorkingTime = workingTime;
-                    //
-                    reportListView.Items.Add(ri);
+                    if (tk != 0)
+                    {
+                        ReportItem ri = new ReportItem();
+                        ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
+                        ri.ApplicationTitle = app.Caption;
+                        ri.WorkingTime = workingTime;
+                        //
+                        reportListView.Items.Add(ri);
+                    }
                 }
                 //
                 eventsGrid.ItemsSource = evs;
@@ -96,6 +100,11 @@ namespace AppMonitorWPF
             WCF_Services.dbEvent ee = (WCF_Services.dbEvent)eventsGrid.SelectedItem;
             long tk = (long)ee.WorkingTime;
             TimeSpan ts = TimeSpan.FromTicks(tk);
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            reportListView.Items.Clear();
         }
     }
 }
