@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -48,11 +49,14 @@ namespace AppMonitorWPF
                 long tk = 0;
                 string frmt = @"hh\:mm\:ss";
                 string workingTime = "";
-
-                reportListView.Items.Clear();
-
+                
                 //
                 List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == eventDatePicker.SelectedDate.Value.ToShortDateString() && x.WorkingTime != null).ToList();
+
+                List<ReportItem> im = new List<ReportItem>();
+
+                List<KeyValuePair<string, long>> ccc = new List<KeyValuePair<string, long>>();
+
                 //
                 List<WCF_Services.dbApplication> apps = srv.GetApplications("", "").ToList();
                 foreach (WCF_Services.dbApplication app in apps)
@@ -69,16 +73,32 @@ namespace AppMonitorWPF
                     //
                     if (tk != 0)
                     {
-                        ReportItem ri = new ReportItem();
-                        ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
-                        ri.ApplicationTitle = app.Caption;
-                        ri.WorkingTime = workingTime;
-                        //
-                        reportListView.Items.Add(ri);
+                        if (ts.TotalSeconds >= 1)
+                        {
+                            ReportItem ri = new ReportItem();
+                            ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
+                            ri.ApplicationTitle = app.Caption;
+                            ri.WorkingTime = workingTime;
+                            ri.WorkingTicks = tk;
+                            //
+                            im.Add(ri);
+                        }
                     }
                 }
                 //
+                reportListView.Items.Clear();
+                //List<ReportItem> rr = im.OrderBy(o => o.WorkingTime).ToList();
+                im.Sort((x, y) => y.WorkingTime.CompareTo(x.WorkingTime));
+                foreach (ReportItem r in im)
+                {
+                    reportListView.Items.Add(r);
+                    //
+                    ccc.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
+                }
+                //
                 eventsGrid.ItemsSource = evs;
+
+                ((PieSeries)mcChart.Series[0]).ItemsSource = ccc;
                 //
                 //await Task.Delay(200);
             }
@@ -104,7 +124,14 @@ namespace AppMonitorWPF
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            reportListView.Items.Clear();
+            ((PieSeries)mcChart.Series[0]).ItemsSource =
+                new KeyValuePair<string, int>[]{
+                    new KeyValuePair<string, int>("Project Manager", 12),
+                    new KeyValuePair<string, int>("CEO", 25),
+                    new KeyValuePair<string, int>("Software Engg.", 5),
+                    new KeyValuePair<string, int>("Team Leader", 6),
+                    new KeyValuePair<string, int>("Project Leader", 10),
+                    new KeyValuePair<string, int>("Developer", 4) };
         }
     }
 }

@@ -11,5 +11,6 @@ namespace AppMonitorWPF
         public DateTime EventDate { get; set; }
         public string ApplicationTitle { get; set; }
         public string WorkingTime { get; set; }
+        public long WorkingTicks { get; set; }
     }
 }

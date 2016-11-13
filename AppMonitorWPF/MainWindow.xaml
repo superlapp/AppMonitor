@@ -1,23 +1,29 @@
-﻿<Window x:Class="AppMonitorWPF.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="481.5" Width="798.5" Activated="Window_Activated" Icon="appIconWPF.ico">
+    
+    xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+
+    
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="AppMonitorWPF.MainWindow"
+        Title="MainWindow" Height="481.5" Width="1082.5" Activated="Window_Activated" Icon="appIconWPF.ico" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="200"/>
+        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="180"/>
         <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="215,41,0,0" VerticalAlignment="Top" Width="200" Height="24" Click="getEventsBtn_Click"/>
-        <TabControl Margin="10,70,10,10">
+        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="195,41,0,0" VerticalAlignment="Top" Width="180" Height="24" Click="getEventsBtn_Click"/>
+        <TabControl Margin="10,70,0,10" HorizontalAlignment="Left" Width="560">
             <TabItem Header="Report">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <ListView x:Name="reportListView" Margin="10">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Date"
-                                                DisplayMemberBinding="{Binding EventDate, StringFormat='dd.MM.yyyy'}"
-                                                Width="100"/>
+                                                DisplayMemberBinding="{Binding EventDate, StringFormat=dd.MM.yyyy}"
+                                                Width="80"/>
                                 <GridViewColumn Header="Application"
                                                 DisplayMemberBinding="{Binding ApplicationTitle}"
-                                                Width="100"/>
+                                                Width="200"/>
                                 <GridViewColumn Header="Total time"
                                                 DisplayMemberBinding="{Binding WorkingTime}"
                                                 Width="100"/>
@@ -27,12 +33,23 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Log">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <DataGrid x:Name="eventsGrid" Margin="10" SelectedCellsChanged="eventsGrid_SelectedCellsChanged"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="button" Content="Clear report log" HorizontalAlignment="Left" Margin="435,41,0,0" VerticalAlignment="Top" Width="227" Click="button_Click"/>
+
+        <DVC:Chart x:Name="mcChart" Margin="575,70,10,10" Title="Area Chart" LegendTitle="Applications">
+            <DVC:Chart.Series>
+                <DVC:PieSeries Title="Experience" 
+                               IndependentValueBinding="{Binding Path=Key}"
+                               DependentValueBinding="{Binding Path=Value}">
+                    
+                </DVC:PieSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>
+        
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="408,38,0,0" VerticalAlignment="Top" Width="162" Height="27" Click="button_Click"/>
 
     </Grid>
 </Window>
