@@ -7,7 +7,7 @@
 
     
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="AppMonitorWPF.MainWindow"
-        Title="MainWindow" Height="481.5" Width="1082.5" Activated="Window_Activated" Icon="appIconWPF.ico" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="673.5" Width="1077.5" Activated="Window_Activated" Icon="appIconWPF.ico" WindowStartupLocation="CenterScreen">
     <Grid>
         <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="180"/>
         <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -18,6 +18,15 @@
                     <ListView x:Name="reportListView" Margin="10">
                         <ListView.View>
                             <GridView>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding ShowInChart}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
                                 <GridViewColumn Header="Date"
                                                 DisplayMemberBinding="{Binding EventDate, StringFormat=dd.MM.yyyy}"
                                                 Width="80"/>
@@ -44,11 +53,11 @@
                 <DVC:PieSeries Title="Experience" 
                                IndependentValueBinding="{Binding Path=Key}"
                                DependentValueBinding="{Binding Path=Value}">
-                    
+
                 </DVC:PieSeries>
             </DVC:Chart.Series>
         </DVC:Chart>
-        
+
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="408,38,0,0" VerticalAlignment="Top" Width="162" Height="27" Click="button_Click"/>
 
     </Grid>

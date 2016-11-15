@@ -42,6 +42,9 @@ namespace AppMonitorWPF
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //async private void DoScan()
+
+        List<ReportItem> im = new List<ReportItem>();
+
         private void GetEvents()
         {
             try
@@ -53,9 +56,9 @@ namespace AppMonitorWPF
                 //
                 List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == eventDatePicker.SelectedDate.Value.ToShortDateString() && x.WorkingTime != null).ToList();
 
-                List<ReportItem> im = new List<ReportItem>();
 
-                List<KeyValuePair<string, long>> ccc = new List<KeyValuePair<string, long>>();
+                im.Clear();
+                
 
                 //
                 List<WCF_Services.dbApplication> apps = srv.GetApplications("", "").ToList();
@@ -76,6 +79,7 @@ namespace AppMonitorWPF
                         if (ts.TotalSeconds >= 1)
                         {
                             ReportItem ri = new ReportItem();
+                            ri.ShowInChart = true;
                             ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
                             ri.ApplicationTitle = app.Caption;
                             ri.WorkingTime = workingTime;
@@ -87,18 +91,20 @@ namespace AppMonitorWPF
                 }
                 //
                 reportListView.Items.Clear();
+
+                List<KeyValuePair<string, long>> ccc = new List<KeyValuePair<string, long>>();
+
                 //List<ReportItem> rr = im.OrderBy(o => o.WorkingTime).ToList();
                 im.Sort((x, y) => y.WorkingTime.CompareTo(x.WorkingTime));
                 foreach (ReportItem r in im)
                 {
                     reportListView.Items.Add(r);
-                    //
-                    ccc.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
                 }
                 //
                 eventsGrid.ItemsSource = evs;
 
-                ((PieSeries)mcChart.Series[0]).ItemsSource = ccc;
+                FillChart();
+                
                 //
                 //await Task.Delay(200);
             }
@@ -106,6 +112,21 @@ namespace AppMonitorWPF
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void FillChart()
+        {
+            List<KeyValuePair<string, long>> source = new List<KeyValuePair<string, long>>();
+            //
+            foreach (ReportItem r in im)
+            {
+                if (r.ShowInChart == true)
+                {
+                    source.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
+                }
+            }
+
+            ((PieSeries)mcChart.Series[0]).ItemsSource = source;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -132,6 +153,16 @@ namespace AppMonitorWPF
                     new KeyValuePair<string, int>("Team Leader", 6),
                     new KeyValuePair<string, int>("Project Leader", 10),
                     new KeyValuePair<string, int>("Developer", 4) };
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            FillChart();
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FillChart();
         }
     }
 }

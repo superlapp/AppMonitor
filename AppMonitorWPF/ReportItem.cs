@@ -8,6 +8,7 @@ namespace AppMonitorWPF
 {
     class ReportItem
     {
+        public bool ShowInChart { get; set; }
         public DateTime EventDate { get; set; }
         public string ApplicationTitle { get; set; }
         public string WorkingTime { get; set; }
