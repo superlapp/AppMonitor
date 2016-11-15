@@ -48,9 +48,9 @@
             </TabItem>
         </TabControl>
 
-        <DVC:Chart x:Name="mcChart" Margin="575,70,10,10" Title="Area Chart" LegendTitle="Applications">
+        <DVC:Chart x:Name="mcChart" Margin="575,10,10,10" Title="Application usage chart" LegendTitle="Applications">
             <DVC:Chart.Series>
-                <DVC:PieSeries Title="Experience" 
+                <DVC:PieSeries Title="Apps"
                                IndependentValueBinding="{Binding Path=Key}"
                                DependentValueBinding="{Binding Path=Value}">
 
@@ -58,7 +58,15 @@
             </DVC:Chart.Series>
         </DVC:Chart>
 
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="408,38,0,0" VerticalAlignment="Top" Width="162" Height="27" Click="button_Click"/>
+        <!--<DVC:Chart x:Name="mcChart2" Margin="575,368,10,10" Title="Application usage chart" LegendTitle="Applications2">
+            <DVC:Chart.Series>
+                <DVC:BarSeries Title="Apps2"
+                               IndependentValueBinding="{Binding Path=Key}"
+                               DependentValueBinding="{Binding Path=Value}">
+
+                </DVC:BarSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>-->
 
     </Grid>
 </Window>

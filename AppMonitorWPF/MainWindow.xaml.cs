@@ -127,6 +127,8 @@ namespace AppMonitorWPF
             }
 
             ((PieSeries)mcChart.Series[0]).ItemsSource = source;
+
+            //((BarSeries)mcChart2.Series[0]).ItemsSource = source;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -141,18 +143,6 @@ namespace AppMonitorWPF
             WCF_Services.dbEvent ee = (WCF_Services.dbEvent)eventsGrid.SelectedItem;
             long tk = (long)ee.WorkingTime;
             TimeSpan ts = TimeSpan.FromTicks(tk);
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            ((PieSeries)mcChart.Series[0]).ItemsSource =
-                new KeyValuePair<string, int>[]{
-                    new KeyValuePair<string, int>("Project Manager", 12),
-                    new KeyValuePair<string, int>("CEO", 25),
-                    new KeyValuePair<string, int>("Software Engg.", 5),
-                    new KeyValuePair<string, int>("Team Leader", 6),
-                    new KeyValuePair<string, int>("Project Leader", 10),
-                    new KeyValuePair<string, int>("Developer", 4) };
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
