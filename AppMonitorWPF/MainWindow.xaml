@@ -9,10 +9,10 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="AppMonitorWPF.MainWindow"
         Title="MainWindow" Height="673.5" Width="1077.5" Activated="Window_Activated" Icon="appIconWPF.ico" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="180"/>
-        <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="195,41,0,0" VerticalAlignment="Top" Width="180" Height="24" Click="getEventsBtn_Click"/>
-        <TabControl Margin="10,70,0,10" HorizontalAlignment="Left" Width="560">
+        <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="29,118,0,0" VerticalAlignment="Top" Width="180"/>
+        <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="29,87,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="271,135,0,0" VerticalAlignment="Top" Width="180" Height="24" Click="getEventsBtn_Click"/>
+        <TabControl Margin="10,164,0,10" HorizontalAlignment="Left" Width="560">
             <TabItem Header="Report">
                 <Grid>
                     <ListView x:Name="reportListView" Margin="10">
@@ -48,7 +48,7 @@
             </TabItem>
         </TabControl>
 
-        <DVC:Chart x:Name="mcChart" Margin="575,10,10,10" Title="Application usage chart" LegendTitle="Applications">
+        <DVC:Chart x:Name="mcChart" Margin="575,164,10,10" Title="Application usage chart" LegendTitle="Applications">
             <DVC:Chart.Series>
                 <DVC:PieSeries Title="Apps"
                                IndependentValueBinding="{Binding Path=Key}"
@@ -57,6 +57,7 @@
                 </DVC:PieSeries>
             </DVC:Chart.Series>
         </DVC:Chart>
+        <Label x:Name="connectStatusLabel" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF707070" FontWeight="Bold" FontSize="22"/>
 
         <!--<DVC:Chart x:Name="mcChart2" Margin="575,368,10,10" Title="Application usage chart" LegendTitle="Applications2">
             <DVC:Chart.Series>

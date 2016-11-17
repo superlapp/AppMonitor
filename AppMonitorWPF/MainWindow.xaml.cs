@@ -33,15 +33,22 @@ namespace AppMonitorWPF
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        private void Window_Activated(object sender, EventArgs e)
+        private async void Window_Activated(object sender, EventArgs e)
         {
-            srv = new AppMonitorWPF.WCF_Services.MonitorWCFService();
+            var connectTask = Task<string>.Factory.StartNew(() => Connect());
+            await connectTask;
+            connectStatusLabel.Content = connectTask.Result.ToString();
+            //
             eventDatePicker.SelectedDate = DateTime.Today;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        //async private void DoScan()
+        private string Connect()
+        {
+            srv = new AppMonitorWPF.WCF_Services.MonitorWCFService();
+            return "connected";
+        }
 
         List<ReportItem> im = new List<ReportItem>();
 
