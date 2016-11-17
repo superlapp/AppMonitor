@@ -63,8 +63,7 @@ namespace AppMonitorWPF
                 string workingTime = "";
                 
                 //
-                List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == eventDatePicker.SelectedDate.Value.ToShortDateString() && x.WorkingTime != null).ToList();
-
+                List<WCF_Services.dbEvent> evs = sh.GetApplicationsAsync(eventDatePicker.SelectedDate.Value);
 
                 im.Clear();
                 
