@@ -72,6 +72,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ReportItem.cs" />
+    <Compile Include="ServiceHelper.cs" />
     <Compile Include="Web References\WCF_Services\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

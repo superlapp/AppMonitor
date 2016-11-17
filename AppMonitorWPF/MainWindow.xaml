@@ -11,7 +11,7 @@
     <Grid>
         <DatePicker x:Name="eventDatePicker" HorizontalAlignment="Left" Margin="29,118,0,0" VerticalAlignment="Top" Width="180"/>
         <Label x:Name="label" Content="Date filter:" HorizontalAlignment="Left" Margin="29,87,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="271,135,0,0" VerticalAlignment="Top" Width="180" Height="24" Click="getEventsBtn_Click"/>
+        <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Left" Margin="214,118,0,0" VerticalAlignment="Top" Width="180" Height="24" Click="getEventsBtn_Click"/>
         <TabControl Margin="10,164,0,10" HorizontalAlignment="Left" Width="560">
             <TabItem Header="Report">
                 <Grid>
@@ -58,6 +58,7 @@
             </DVC:Chart.Series>
         </DVC:Chart>
         <Label x:Name="connectStatusLabel" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF707070" FontWeight="Bold" FontSize="22"/>
+        <ProgressBar HorizontalAlignment="Left" Height="24" Margin="399,118,0,0" VerticalAlignment="Top" Width="180"/>
 
         <!--<DVC:Chart x:Name="mcChart2" Margin="575,368,10,10" Title="Application usage chart" LegendTitle="Applications2">
             <DVC:Chart.Series>

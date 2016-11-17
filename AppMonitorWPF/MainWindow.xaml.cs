@@ -23,6 +23,8 @@ namespace AppMonitorWPF
     public partial class MainWindow : Window
     {
         AppMonitorWPF.WCF_Services.MonitorWCFService srv;
+
+        ServiceHelper sh = new ServiceHelper();
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
