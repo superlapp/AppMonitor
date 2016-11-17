@@ -128,7 +128,7 @@ namespace AppMonitorWPF
 
             ((PieSeries)mcChart.Series[0]).ItemsSource = source;
 
-            //((BarSeries)mcChart2.Series[0]).ItemsSource = source;
+            //((BarSeries)mcChart2.Series[0]).ItemsSource = source;/
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
