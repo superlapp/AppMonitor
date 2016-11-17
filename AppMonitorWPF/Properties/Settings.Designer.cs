@@ -12,7 +12,7 @@ namespace AppMonitorWPF.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -30,6 +30,29 @@ namespace AppMonitorWPF.Properties {
         public string AppMonitorWPF_WCF_Services_MonitorWCFService {
             get {
                 return ((string)(this["AppMonitorWPF_WCF_Services_MonitorWCFService"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MinTimeLimit {
+            get {
+                return ((int)(this["MinTimeLimit"]));
+            }
+            set {
+                this["MinTimeLimit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.ArrayList HiddenApps {
+            get {
+                return ((global::System.Collections.ArrayList)(this["HiddenApps"]));
+            }
+            set {
+                this["HiddenApps"] = value;
             }
         }
     }

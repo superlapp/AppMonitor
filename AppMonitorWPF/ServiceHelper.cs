@@ -9,17 +9,17 @@ namespace AppMonitorWPF
 {
     class ServiceHelper
     {
-        AppMonitorWPF.WCF_Services.MonitorWCFService srv;
+        AppMonitorWPF.WCF_Services.MonitorWCFService srv = new WCF_Services.MonitorWCFService();
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        public async void Connect()
-        {
-            var task = Task<bool>.Factory.StartNew(() => ConnectTask());
-            await task;
-        }
+        //public async void ConnectAsync()
+        //{
+        //    var task = Task<bool>.Factory.StartNew(() => Connect());
+        //    await task;
+        //}
 
-        private bool ConnectTask()
+        private bool Connect()
         {
             bool result = false;
             try

@@ -59,6 +59,7 @@
         </DVC:Chart>
         <Label x:Name="connectStatusLabel" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FF707070" FontWeight="Bold" FontSize="22"/>
         <ProgressBar HorizontalAlignment="Left" Height="24" Margin="399,118,0,0" VerticalAlignment="Top" Width="180"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="700,49,0,0" VerticalAlignment="Top" Width="94" Height="30" Click="button_Click"/>
 
         <!--<DVC:Chart x:Name="mcChart2" Margin="575,368,10,10" Title="Application usage chart" LegendTitle="Applications2">
             <DVC:Chart.Series>

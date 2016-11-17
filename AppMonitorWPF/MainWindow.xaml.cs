@@ -22,7 +22,7 @@ namespace AppMonitorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        AppMonitorWPF.WCF_Services.MonitorWCFService srv;
+        WCF_Services.MonitorWCFService srv;
 
         ServiceHelper sh = new ServiceHelper();
         //---------------------------------------------------------------------
@@ -48,7 +48,7 @@ namespace AppMonitorWPF
         //---------------------------------------------------------------------
         private string Connect()
         {
-            srv = new AppMonitorWPF.WCF_Services.MonitorWCFService();
+            srv = new WCF_Services.MonitorWCFService();
             return "connected";
         }
 
@@ -61,9 +61,11 @@ namespace AppMonitorWPF
                 long tk = 0;
                 string frmt = @"hh\:mm\:ss";
                 string workingTime = "";
-                
+
+                DateTime date = eventDatePicker.SelectedDate.Value;
+
                 //
-                List<WCF_Services.dbEvent> evs = sh.GetApplicationsAsync(eventDatePicker.SelectedDate.Value);
+                List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == date.ToShortDateString() && x.WorkingTime != null).ToList();
 
                 im.Clear();
                 
@@ -81,10 +83,11 @@ namespace AppMonitorWPF
                     }
                     TimeSpan ts = TimeSpan.FromTicks(tk);
                     workingTime = ts.ToString(frmt);
+                    double minLimit = Convert.ToInt32(AppMonitorWPF.Properties.Settings.Default.MinTimeLimit);
                     //
                     if (tk != 0)
                     {
-                        if (ts.TotalSeconds >= 1)
+                        if (ts.TotalSeconds >= minLimit)
                         {
                             ReportItem ri = new ReportItem();
                             ri.ShowInChart = true;
@@ -93,7 +96,10 @@ namespace AppMonitorWPF
                             ri.WorkingTime = workingTime;
                             ri.WorkingTicks = tk;
                             //
-                            im.Add(ri);
+                            if (IsHidden(app.Caption) == false)
+                            {
+                                im.Add(ri);
+                            }
                         }
                     }
                 }
@@ -120,6 +126,21 @@ namespace AppMonitorWPF
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private bool IsHidden(string app)
+        {
+            if (Properties.Settings.Default.HiddenApps != null)
+            {
+                foreach (string happ in Properties.Settings.Default.HiddenApps)
+                {
+                    if (app.ToLower().Contains(happ.ToLower()))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private void FillChart()
@@ -158,6 +179,12 @@ namespace AppMonitorWPF
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             FillChart();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            winOptions wo = new winOptions();
+            wo.ShowDialog();
         }
     }
 }
