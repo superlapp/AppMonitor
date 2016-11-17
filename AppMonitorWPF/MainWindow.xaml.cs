@@ -125,17 +125,14 @@ namespace AppMonitorWPF
         {
             List<KeyValuePair<string, long>> source = new List<KeyValuePair<string, long>>();
             //
-            foreach (ReportItem r in im)
+            foreach (ReportItem r in im.Where(x => x.ShowInChart == true))
             {
-                if (r.ShowInChart == true)
-                {
-                    source.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
-                }
+                source.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
             }
-
+            //
             ((PieSeries)mcChart.Series[0]).ItemsSource = source;
 
-            //((BarSeries)mcChart2.Series[0]).ItemsSource = source;/
+            //((BarSeries)mcChart2.Series[0]).ItemsSource = source;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
