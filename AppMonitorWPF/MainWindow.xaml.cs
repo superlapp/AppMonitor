@@ -130,43 +130,34 @@ namespace AppMonitorWPF
 
         private bool IsHidden(string app)
         {
+            bool r = false;
+            //
             if (Properties.Settings.Default.HiddenApps != null)
             {
                 foreach (string happ in Properties.Settings.Default.HiddenApps)
                 {
                     if (happ.ToLower().Contains('*'))
                     {
-
-                        Debug.WriteLine(happ.ToLower());
-                        Debug.WriteLine(happ.ToLower().Substring(0, 1));
-                        Debug.WriteLine(happ.ToLower().Substring(happ.Length - 1, 1));
-
                         if (happ.StartsWith("*") == true && happ.EndsWith("*") == true)
                         {
-                            bool r = app.ToLower().Contains(happ.ToLower().Replace("*", ""));
-                            return r;
+                            r = app.ToLower().Contains(happ.ToLower().Replace("*", ""));
                         }
-
                         if (happ.StartsWith("*") == true && happ.EndsWith("*") == false)
                         {
-                            bool r = app.ToLower().EndsWith(happ.ToLower().Replace("*", ""));
-                            return r;
+                            r = app.ToLower().EndsWith(happ.ToLower().Replace("*", ""));
                         }
-
                         if (happ.StartsWith("*") == false && happ.EndsWith("*") == true)
                         {
-                            bool r = app.ToLower().StartsWith(happ.ToLower().Replace("*", ""));
-                            return r;
+                            r = app.ToLower().StartsWith(happ.ToLower().Replace("*", ""));
                         }
-
                     }
                     else
                     {
-                        return (app.ToLower() == happ.ToLower()) ? true : false;
+                        r =  (app.ToLower() == happ.ToLower()) ? true : false;
                     }
                 }
             }
-            return false;
+            return r;
         }
 
         private void FillChart()

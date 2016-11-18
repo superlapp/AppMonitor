@@ -13,6 +13,7 @@ namespace AppMonitor
         MonitorWCFService mon;
         AppInfo activeProcess = null;
         AppInfo currentProcess = null;
+        DateTime currentDate;
         //
         DateTime startTime = DateTime.Now;
         //
@@ -46,28 +47,44 @@ namespace AppMonitor
             //}
         }
 
+        
+
         public void Work()
         {
             //try
             //{
-                activeProcess = GetActiveAppInfo();
-
-                if (activeProcess != null)
+            activeProcess = GetActiveAppInfo();
+            currentDate = DateTime.Now;
+            //
+            if (activeProcess != null)
+            {
+                if (activeProcess.Id != 0)
                 {
-                    if (activeProcess.Id != 0)
+                    //
+                    if (currentProcess.Id != activeProcess.Id)
                     {
+                        startTime = DateTime.Now;
                         //
-                        if (currentProcess.Id != activeProcess.Id)
+                        ApplicationIsLost(currentProcess, DateTime.Now);
+                        ApplicationFound(activeProcess, startTime);
+                        //
+                        currentProcess = activeProcess;
+                    }
+                    else
+                    {
+                        if (currentDate.Day != DateTime.Now.Day)
                         {
                             startTime = DateTime.Now;
                             //
-                            ApplicationIsLost(currentProcess, DateTime.Now);
+                            ApplicationIsLost(currentProcess, DateTime.Now.AddSeconds(-1));
                             ApplicationFound(activeProcess, startTime);
                             //
+                            currentDate = DateTime.Now;
                             currentProcess = activeProcess;
                         }
                     }
                 }
+            }
             //}
             //catch (Exception ex)
             //{
