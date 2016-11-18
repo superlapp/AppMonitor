@@ -134,9 +134,35 @@ namespace AppMonitorWPF
             {
                 foreach (string happ in Properties.Settings.Default.HiddenApps)
                 {
-                    if (app.ToLower().Contains(happ.ToLower()))
+                    if (happ.ToLower().Contains('*'))
                     {
-                        return true;
+
+                        Debug.WriteLine(happ.ToLower());
+                        Debug.WriteLine(happ.ToLower().Substring(0, 1));
+                        Debug.WriteLine(happ.ToLower().Substring(happ.Length - 1, 1));
+
+                        if (happ.StartsWith("*") == true && happ.EndsWith("*") == true)
+                        {
+                            bool r = app.ToLower().Contains(happ.ToLower().Replace("*", ""));
+                            return r;
+                        }
+
+                        if (happ.StartsWith("*") == true && happ.EndsWith("*") == false)
+                        {
+                            bool r = app.ToLower().EndsWith(happ.ToLower().Replace("*", ""));
+                            return r;
+                        }
+
+                        if (happ.StartsWith("*") == false && happ.EndsWith("*") == true)
+                        {
+                            bool r = app.ToLower().StartsWith(happ.ToLower().Replace("*", ""));
+                            return r;
+                        }
+
+                    }
+                    else
+                    {
+                        return (app.ToLower() == happ.ToLower()) ? true : false;
                     }
                 }
             }

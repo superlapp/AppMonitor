@@ -27,17 +27,17 @@ namespace AppMonitorWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //ReadOptions();
+            ReadOptions();
         }
 
         private void ReadOptions()
         {
-            minTimeLimitTextBox.Text = Properties.Settings.Default.MinTimeLimit.ToString();
+            minTimeLimitTextBox.Text = AppMonitorWPF.Properties.Settings.Default.MinTimeLimit.ToString();
             //
-            if (Properties.Settings.Default.HiddenApps != null)
+            if (AppMonitorWPF.Properties.Settings.Default.HiddenApps != null)
             {
                 hiddenAppsListBox.Items.Clear();
-                foreach (string happ in Properties.Settings.Default.HiddenApps)
+                foreach (string happ in AppMonitorWPF.Properties.Settings.Default.HiddenApps)
                 {
                     hiddenAppsListBox.Items.Add(happ);
                 }
@@ -46,22 +46,29 @@ namespace AppMonitorWPF
 
         private void SaveOptions()
         {
-            Properties.Settings.Default.MinTimeLimit = Convert.ToInt32(minTimeLimitTextBox.Text);
-            //
-            ArrayList happs = new ArrayList();
-            foreach (string happ in hiddenAppsListBox.Items)
+            try
             {
-                happs.Add(happ);
+                AppMonitorWPF.Properties.Settings.Default.MinTimeLimit = Convert.ToInt32(minTimeLimitTextBox.Text);
+                //
+                ArrayList happs = new ArrayList();
+                foreach (string happ in hiddenAppsListBox.Items)
+                {
+                    happs.Add(happ);
+                }
+                AppMonitorWPF.Properties.Settings.Default.HiddenApps = happs;
+                //
+                AppMonitorWPF.Properties.Settings.Default.Save();
             }
-            Properties.Settings.Default.HiddenApps = happs;
-            //
-            Properties.Settings.Default.Save();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
             SaveOptions();
-            Close();
+            this.Close();
         }
 
         private void addAppButton_Click(object sender, RoutedEventArgs e)
