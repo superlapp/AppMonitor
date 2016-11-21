@@ -52,7 +52,7 @@ namespace AppMonitorWCFService
                 if (cnt == 0)
                 {
                     dbUser usr = new dbUser();
-                    usr.Caption = host;
+                    usr.Caption = user;
                     db.dbUsers.Add(usr);
                 }
 
@@ -80,26 +80,16 @@ namespace AppMonitorWCFService
         //---------------------------------------------------------------------
         public List<dbHost> GetHosts()
         {
-            List<string> hosts = new List<string>();
-            //
-            //
             return db.dbHosts.ToList();
         }
 
         public List<dbUser> GetUsers(string host)
         {
-            //List<string> users = new List<string>();
-            //
-            //
             return db.dbUsers.ToList();
         }
 
         public List<dbApplication> GetApplications(string host, string user)
         {
-            //List<dbApplication> aps = new List<dbApplication>();
-            //
-
-            //
             return db.dbApplications.ToList();
         }
 

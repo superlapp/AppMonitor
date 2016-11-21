@@ -22,9 +22,11 @@ namespace AppMonitorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        WCF_Services.MonitorWCFService srv;
+        WCF_Services.MonitorWCFService srv = new WCF_Services.MonitorWCFService();
 
         ServiceHelper sh = new ServiceHelper();
+
+        List<ReportItem> chartList = new List<ReportItem>();
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -35,97 +37,139 @@ namespace AppMonitorWPF
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        private async void Window_Activated(object sender, EventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var connectTask = Task<string>.Factory.StartNew(() => Connect());
-            await connectTask;
-            connectStatusLabel.Content = connectTask.Result.ToString();
-            //
+            GetHostsAsync();            
             eventDatePicker.SelectedDate = DateTime.Today;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        private string Connect()
+        private async void GetHostsAsync()
         {
-            srv = new WCF_Services.MonitorWCFService();
-            return "connected";
+            var task = Task<WCF_Services.dbHost[]>.Factory.StartNew(() => GetHosts());
+            await task;
+            hostComboBox.ItemsSource = task.Result;
+            hostComboBox.DisplayMemberPath = "Caption";
+            hostComboBox.SelectedIndex = 0;
+            //
+            GetUsersAsync();
         }
 
-        List<ReportItem> im = new List<ReportItem>();
-
-        private void GetEvents()
+        private WCF_Services.dbHost[] GetHosts()
         {
+            WCF_Services.dbHost[] result = null;
             try
             {
-                long tk = 0;
-                string frmt = @"hh\:mm\:ss";
-                string workingTime = "";
-
-                DateTime date = eventDatePicker.SelectedDate.Value;
-
-                //
-                List<WCF_Services.dbEvent> evs = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == date.ToShortDateString() && x.WorkingTime != null).ToList();
-
-                im.Clear();
-                
-
-                //
-                List<WCF_Services.dbApplication> apps = srv.GetApplications("", "").ToList();
-                foreach (WCF_Services.dbApplication app in apps)
-                {
-                    List<WCF_Services.dbEvent> evsPerApp = evs.FindAll(x => x.AppTitle == app.Caption);
-                    //
-                    tk = 0;
-                    foreach (WCF_Services.dbEvent ev in evsPerApp)
-                    {
-                        tk = tk + (long)ev.WorkingTime;
-                    }
-                    TimeSpan ts = TimeSpan.FromTicks(tk);
-                    workingTime = ts.ToString(frmt);
-                    double minLimit = Convert.ToInt32(AppMonitorWPF.Properties.Settings.Default.MinTimeLimit);
-                    //
-                    if (tk != 0)
-                    {
-                        if (ts.TotalSeconds >= minLimit)
-                        {
-                            ReportItem ri = new ReportItem();
-                            ri.ShowInChart = true;
-                            ri.EventDate = eventDatePicker.SelectedDate ?? DateTime.Now;
-                            ri.ApplicationTitle = app.Caption;
-                            ri.WorkingTime = workingTime;
-                            ri.WorkingTicks = tk;
-                            //
-                            if (IsHidden(app.Caption) == false)
-                            {
-                                im.Add(ri);
-                            }
-                        }
-                    }
-                }
-                //
-                reportListView.Items.Clear();
-
-                List<KeyValuePair<string, long>> ccc = new List<KeyValuePair<string, long>>();
-
-                //List<ReportItem> rr = im.OrderBy(o => o.WorkingTime).ToList();
-                im.Sort((x, y) => y.WorkingTime.CompareTo(x.WorkingTime));
-                foreach (ReportItem r in im)
-                {
-                    reportListView.Items.Add(r);
-                }
-                //
-                eventsGrid.ItemsSource = evs;
-
-                FillChart();
-                
-                //
-                //await Task.Delay(200);
+                result = srv.GetHosts();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message);
             }
+            //
+            return result;
+        }
+
+        private async void GetUsersAsync()
+        {
+            string host = ((WCF_Services.dbHost)hostComboBox.SelectedValue).Caption;
+            //
+            var task = Task<WCF_Services.dbUser[]>.Factory.StartNew(() => GetUsers(host));
+            await task;
+            userComboBox.ItemsSource = task.Result;
+            userComboBox.DisplayMemberPath = "Caption";
+            userComboBox.SelectedIndex = 0;
+        }
+
+        private WCF_Services.dbUser[] GetUsers(string host)
+        {
+            WCF_Services.dbUser[] result = null;
+            try
+            {
+                result = srv.GetUsers(host);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //
+            return result;
+        }
+
+        private async void GetEventsAsync()
+        {
+            getEventsBtn.IsEnabled = false;
+            //
+            string host = ((WCF_Services.dbHost)hostComboBox.SelectedValue).Caption;
+            string user = ((WCF_Services.dbUser)userComboBox.SelectedValue).Caption;
+            DateTime date = eventDatePicker.SelectedDate.Value;
+            //
+            var task = Task<List<WCF_Services.dbEvent>>.Factory.StartNew(() =>
+                GetEvents(host, user, date));
+            await task;
+            //
+            getEventsBtn.IsEnabled = true;
+        }
+
+        private List<WCF_Services.dbEvent> GetEvents(string host, string user, DateTime date)
+        {
+            var result = new List<WCF_Services.dbEvent>();
+            long tk = 0;
+            string timeFormatter = @"hh\:mm\:ss";
+            string workingTime = "";
+
+            result = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == date.ToShortDateString() && x.WorkingTime != null).ToList();
+
+            chartList.Clear();
+
+            var apps = srv.GetApplications("", "").ToList();
+            foreach (WCF_Services.dbApplication app in apps)
+            {
+                var evsPerApp = result.FindAll(x => x.AppTitle == app.Caption);
+                //
+                tk = 0;
+                foreach (WCF_Services.dbEvent ev in evsPerApp)
+                {
+                    tk = tk + (long)ev.WorkingTime;
+                }
+                TimeSpan ts = TimeSpan.FromTicks(tk);
+                workingTime = ts.ToString(timeFormatter);
+                double minLimit = Convert.ToInt32(AppMonitorWPF.Properties.Settings.Default.MinTimeLimit);
+                //
+                if (tk != 0)
+                {
+                    if (ts.TotalSeconds >= minLimit)
+                    {
+                        ReportItem ri = new ReportItem();
+                        ri.ShowInChart = true;
+                        ri.EventDate = date;
+                        ri.ApplicationTitle = app.Caption;
+                        ri.WorkingTime = workingTime;
+                        ri.WorkingTicks = tk;
+                        //
+                        if (IsHidden(app.Caption) == false)
+                        {
+                            chartList.Add(ri);
+                        }
+                    }
+                }
+            }
+            //
+            reportListView.Items.Clear();
+            //var ccc = new List<KeyValuePair<string, long>>();
+            //List<ReportItem> rr = im.OrderBy(o => o.WorkingTime).ToList();
+            chartList.Sort((x, y) => y.WorkingTime.CompareTo(x.WorkingTime));
+            foreach (ReportItem r in chartList)
+            {
+                reportListView.Items.Add(r);
+            }
+            //
+            eventsGrid.ItemsSource = result;
+            FillChart();
+            //
+            //await Task.Delay(200);
+            return result;
         }
 
         private bool IsHidden(string app)
@@ -162,23 +206,19 @@ namespace AppMonitorWPF
 
         private void FillChart()
         {
-            List<KeyValuePair<string, long>> source = new List<KeyValuePair<string, long>>();
-            //
-            foreach (ReportItem r in im.Where(x => x.ShowInChart == true))
+            var source = new List<KeyValuePair<string, long>>();
+            foreach (ReportItem r in chartList.Where(x => x.ShowInChart == true))
             {
                 source.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
             }
-            //
             ((PieSeries)mcChart.Series[0]).ItemsSource = source;
-
-            //((BarSeries)mcChart2.Series[0]).ItemsSource = source;
         }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         private void getEventsBtn_Click(object sender, RoutedEventArgs e)
         {
-            GetEvents();
+            GetEventsAsync();
         }
 
         private void eventsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -203,5 +243,7 @@ namespace AppMonitorWPF
             winOptions wo = new winOptions();
             wo.ShowDialog();
         }
+
+
     }
 }
