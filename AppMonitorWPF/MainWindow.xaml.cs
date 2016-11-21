@@ -105,22 +105,13 @@ namespace AppMonitorWPF
             string user = ((WCF_Services.dbUser)userComboBox.SelectedValue).Caption;
             DateTime date = eventDatePicker.SelectedDate.Value;
             //
-            var task = Task<List<WCF_Services.dbEvent>>.Factory.StartNew(() =>
-                GetEvents(host, user, date));
+            var task = Task<List<WCF_Services.dbEvent>>.Factory.StartNew(() => GetEvents(host, user, date));
             await task;
-            //
-            getEventsBtn.IsEnabled = true;
-        }
-
-        private List<WCF_Services.dbEvent> GetEvents(string host, string user, DateTime date)
-        {
-            var result = new List<WCF_Services.dbEvent>();
+            var result = task.Result;
+            //-----------------------------------------------------------------
             long tk = 0;
             string timeFormatter = @"hh\:mm\:ss";
             string workingTime = "";
-
-            result = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == date.ToShortDateString() && x.WorkingTime != null).ToList();
-
             chartList.Clear();
 
             var apps = srv.GetApplications("", "").ToList();
@@ -169,6 +160,14 @@ namespace AppMonitorWPF
             FillChart();
             //
             //await Task.Delay(200);
+            //
+            getEventsBtn.IsEnabled = true;
+        }
+
+        private List<WCF_Services.dbEvent> GetEvents(string host, string user, DateTime date)
+        {
+            var result = new List<WCF_Services.dbEvent>();
+            result = srv.GetEvents().Where(x => x.DetectDT.ToShortDateString() == date.ToShortDateString() && x.WorkingTime != null).ToList();
             return result;
         }
 
