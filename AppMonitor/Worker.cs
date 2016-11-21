@@ -31,36 +31,21 @@ namespace AppMonitor
         //---------------------------------------------------------------------
         public void StartMonitoring()
         {
-            //try
-            //{
-                lv.Items.Clear();
-
-                activeProcess = GetActiveAppInfo();
-                
-                ApplicationFound(activeProcess, startTime);
-                //
-                currentProcess = activeProcess;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-        }
-
-        
+            lv.Items.Clear();
+            activeProcess = GetActiveAppInfo();
+            ApplicationFound(activeProcess, startTime);
+            currentProcess = activeProcess;
+            currentDate = DateTime.Now;
+        }        
 
         public void Work()
         {
-            //try
-            //{
             activeProcess = GetActiveAppInfo();
-            currentDate = DateTime.Now;
             //
             if (activeProcess != null)
             {
                 if (activeProcess.Id != 0)
                 {
-                    //
                     if (currentProcess.Id != activeProcess.Id)
                     {
                         startTime = DateTime.Now;
@@ -79,17 +64,13 @@ namespace AppMonitor
                             ApplicationIsLost(currentProcess, DateTime.Now.AddSeconds(-1));
                             ApplicationFound(activeProcess, startTime);
                             //
-                            currentDate = DateTime.Now;
                             currentProcess = activeProcess;
                         }
                     }
                 }
             }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            //
+            currentDate = DateTime.Now;
         }
 
         public void StopMonitoring()

@@ -27,6 +27,7 @@ namespace AppMonitorWPF
         ServiceHelper sh = new ServiceHelper();
 
         List<ReportItem> chartList = new List<ReportItem>();
+
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -39,6 +40,15 @@ namespace AppMonitorWPF
         //---------------------------------------------------------------------
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            hostsComboBox.FontStyle = FontStyles.Italic;
+            hostsComboBox.Items.Add("Loading...");
+            hostsComboBox.SelectedIndex = 0;
+
+            usersComboBox.FontStyle = FontStyles.Italic;
+            usersComboBox.Items.Add("Loading...");
+            usersComboBox.SelectedIndex = 0;
+
+
             GetHostsAsync();            
             eventDatePicker.SelectedDate = DateTime.Today;
         }
@@ -49,9 +59,13 @@ namespace AppMonitorWPF
         {
             var task = Task<WCF_Services.dbHost[]>.Factory.StartNew(() => GetHosts());
             await task;
-            hostComboBox.ItemsSource = task.Result;
-            hostComboBox.DisplayMemberPath = "Caption";
-            hostComboBox.SelectedIndex = 0;
+
+            hostsComboBox.Items.Clear();
+            hostsComboBox.FontStyle = FontStyles.Normal;
+
+            hostsComboBox.ItemsSource = task.Result;
+            hostsComboBox.DisplayMemberPath = "Caption";
+            hostsComboBox.SelectedIndex = 0;
             //
             GetUsersAsync();
         }
@@ -73,13 +87,15 @@ namespace AppMonitorWPF
 
         private async void GetUsersAsync()
         {
-            string host = ((WCF_Services.dbHost)hostComboBox.SelectedValue).Caption;
+            string host = ((WCF_Services.dbHost)hostsComboBox.SelectedValue).Caption;
             //
             var task = Task<WCF_Services.dbUser[]>.Factory.StartNew(() => GetUsers(host));
             await task;
-            userComboBox.ItemsSource = task.Result;
-            userComboBox.DisplayMemberPath = "Caption";
-            userComboBox.SelectedIndex = 0;
+            usersComboBox.Items.Clear();
+            usersComboBox.FontStyle = FontStyles.Normal;
+            usersComboBox.ItemsSource = task.Result;
+            usersComboBox.DisplayMemberPath = "Caption";
+            usersComboBox.SelectedIndex = 0;
         }
 
         private WCF_Services.dbUser[] GetUsers(string host)
@@ -101,14 +117,16 @@ namespace AppMonitorWPF
         {
             getEventsBtn.IsEnabled = false;
             //
-            string host = ((WCF_Services.dbHost)hostComboBox.SelectedValue).Caption;
-            string user = ((WCF_Services.dbUser)userComboBox.SelectedValue).Caption;
+            string host = ((WCF_Services.dbHost)hostsComboBox.SelectedValue).Caption;
+            string user = ((WCF_Services.dbUser)usersComboBox.SelectedValue).Caption;
             DateTime date = eventDatePicker.SelectedDate.Value;
             //
             var task = Task<List<WCF_Services.dbEvent>>.Factory.StartNew(() => GetEvents(host, user, date));
             await task;
             var result = task.Result;
             //-----------------------------------------------------------------
+            long totalTime = 0;
+
             long tk = 0;
             string timeFormatter = @"hh\:mm\:ss";
             string workingTime = "";
@@ -122,6 +140,8 @@ namespace AppMonitorWPF
                 tk = 0;
                 foreach (WCF_Services.dbEvent ev in evsPerApp)
                 {
+                    totalTime = totalTime + (long)ev.WorkingTime;
+
                     tk = tk + (long)ev.WorkingTime;
                 }
                 TimeSpan ts = TimeSpan.FromTicks(tk);
@@ -146,6 +166,11 @@ namespace AppMonitorWPF
                     }
                 }
             }
+
+            TimeSpan ts2 = TimeSpan.FromTicks(totalTime);
+
+            label1.Content = ts2.ToString(timeFormatter);
+
             //
             reportListView.Items.Clear();
             //var ccc = new List<KeyValuePair<string, long>>();

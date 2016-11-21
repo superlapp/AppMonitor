@@ -9,7 +9,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="AppMonitorWPF.MainWindow"
         Title="MainWindow" Height="467.5" Width="1017.5" Icon="appIconWPF.ico" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
-        <TabControl Margin="220,10,0,10" HorizontalAlignment="Left" Width="350">
+        <TabControl Margin="220,10,0,10" HorizontalAlignment="Left" Width="469">
             <TabItem Header="Report">
                 <Grid>
                     <ListView x:Name="reportListView">
@@ -45,7 +45,7 @@
             </TabItem>
         </TabControl>
 
-        <DVC:Chart x:Name="mcChart" Margin="575,10,10,10" Title="Application usage chart" LegendTitle="Applications">
+        <DVC:Chart x:Name="mcChart" Margin="694,10,10,10" Title="Application usage chart" LegendTitle="Applications">
             <DVC:Chart.Series>
                 <DVC:PieSeries Title="Apps"
                                IndependentValueBinding="{Binding Path=Key}"
@@ -59,12 +59,13 @@
                 <Label x:Name="label" Content="Date:" HorizontalAlignment="Left" Margin="1,96,0,0" VerticalAlignment="Top"/>
                 <DatePicker x:Name="eventDatePicker" Margin="1,122,0,0" VerticalAlignment="Top"/>
                 <Label Content="Host:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <ComboBox x:Name="hostComboBox" Margin="0,26,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="hostsComboBox" Margin="0,26,0,0" VerticalAlignment="Top"/>
                 <Label Content="User:" HorizontalAlignment="Left" Margin="1,48,0,0" VerticalAlignment="Top"/>
-                <ComboBox x:Name="userComboBox" Margin="1,74,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="usersComboBox" Margin="1,74,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Right" Width="80" Click="getEventsBtn_Click" Height="24" VerticalAlignment="Bottom"/>
                 <Button x:Name="button" Content="Options" HorizontalAlignment="Left" Width="80" Click="button_Click" Height="24" VerticalAlignment="Bottom"/>
                 <ProgressBar Height="24" Margin="1,151,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="59,257,0,0" VerticalAlignment="Top"/>
 
             </Grid>
         </GroupBox>
