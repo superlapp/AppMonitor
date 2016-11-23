@@ -16,5 +16,8 @@ namespace AppMonitorWCFService
     {
         public int Id { get; set; }
         public string Caption { get; set; }
+        public Nullable<int> HostId { get; set; }
+    
+        public virtual dbHost dbHost { get; set; }
     }
 }

@@ -14,7 +14,17 @@ namespace AppMonitorWCFService
     
     public partial class dbHost
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public dbHost()
+        {
+            this.dbUsers = new HashSet<dbUser>();
+        }
+    
         public int Id { get; set; }
         public string Caption { get; set; }
+        public string test { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dbUser> dbUsers { get; set; }
     }
 }

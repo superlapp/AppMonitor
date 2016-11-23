@@ -4,11 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3b7562b9c7dc4d76ab8716b71b0a1d20" Name="Diagram1">
-        <EntityTypeShape EntityType="wcf_dbModel.dbApplication" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="wcf_dbModel.dbEvent" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="wcf_dbModel.dbHost" Width="1.5" PointX="5.75" PointY="1" />
-        <EntityTypeShape EntityType="wcf_dbModel.dbUser" Width="1.5" PointX="7.75" PointY="2.375" />
+      <Diagram DiagramId="e3201f55c2e3433eba327df5b94a717a" Name="Diagram1">
+        <EntityTypeShape EntityType="wcf_dbModel.dbApplication" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbEvent" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbHost" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="wcf_dbModel.dbUser" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="wcf_dbModel.FK_dbUsers_dbHosts" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
