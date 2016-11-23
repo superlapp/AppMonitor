@@ -55,17 +55,17 @@
             </DVC:Chart.Series>
         </DVC:Chart>
         <GroupBox Header="Filter" HorizontalAlignment="Left" Margin="10,10,0,10" Width="205">
-            <Grid>
-                <Label x:Name="label" Content="Date:" HorizontalAlignment="Left" Margin="1,96,0,0" VerticalAlignment="Top"/>
-                <DatePicker x:Name="eventDatePicker" Margin="1,122,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"/>
-                <Label Content="Host:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <ComboBox x:Name="hostsComboBox" Margin="0,26,0,0" VerticalAlignment="Top"/>
-                <Label Content="User:" HorizontalAlignment="Left" Margin="1,48,0,0" VerticalAlignment="Top"/>
-                <ComboBox x:Name="usersComboBox" Margin="1,74,0,0" VerticalAlignment="Top"/>
+            <Grid Margin="0,0,1,0">
+                <Label x:Name="label" Content="Date:" HorizontalAlignment="Left" Margin="1,58,0,0" VerticalAlignment="Top" Padding="4,0,0,0" Height="24" Width="51" VerticalContentAlignment="Center"/>
+                <DatePicker x:Name="eventDatePicker" Margin="56,58,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" Height="24" Width="136"/>
+                <Label Content="Host:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="49" VerticalContentAlignment="Center" Padding="4,0,0,0" Margin="1,0,0,0"/>
+                <ComboBox x:Name="hostsComboBox" Margin="56,0,0,0" VerticalAlignment="Top" Height="24" Width="136"/>
+                <Label Content="User:" HorizontalAlignment="Left" Margin="1,29,0,0" VerticalAlignment="Top" Padding="4,0,0,0" Height="24" Width="49" VerticalContentAlignment="Center"/>
+                <ComboBox x:Name="usersComboBox" Margin="56,29,0,0" VerticalAlignment="Top" Width="136" Height="24"/>
                 <Button x:Name="getEventsBtn" Content="Get events" HorizontalAlignment="Right" Width="80" Click="getEventsBtn_Click" Height="24" VerticalAlignment="Bottom"/>
                 <Button x:Name="button" Content="Options" HorizontalAlignment="Left" Width="80" Click="button_Click" Height="24" VerticalAlignment="Bottom"/>
-                <ProgressBar Height="24" Margin="1,151,0,0" VerticalAlignment="Top"/>
-                <Label x:Name="label1" Content="Label" Margin="1,175,0,0" VerticalAlignment="Top"/>
+                <ProgressBar Height="24" Margin="1,87,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label1" Content="Label" Margin="1,116,0,0" VerticalAlignment="Top" Padding="4,0,0,0" Height="24" VerticalContentAlignment="Center"/>
 
             </Grid>
         </GroupBox>
