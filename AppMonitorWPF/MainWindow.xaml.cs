@@ -23,11 +23,8 @@ namespace AppMonitorWPF
     public partial class MainWindow : Window
     {
         WCF_Services.MonitorWCFService srv = new WCF_Services.MonitorWCFService();
-
         ServiceHelper sh = new ServiceHelper();
-
         List<ReportItem> chartList = new List<ReportItem>();
-
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -43,12 +40,11 @@ namespace AppMonitorWPF
             hostsComboBox.FontStyle = FontStyles.Italic;
             hostsComboBox.Items.Add("Loading...");
             hostsComboBox.SelectedIndex = 0;
-
+            //
             usersComboBox.FontStyle = FontStyles.Italic;
             usersComboBox.Items.Add("Loading...");
             usersComboBox.SelectedIndex = 0;
-
-
+            //
             GetHostsAsync();            
             eventDatePicker.SelectedDate = DateTime.Today;
         }
@@ -59,10 +55,9 @@ namespace AppMonitorWPF
         {
             var task = Task<WCF_Services.dbHost[]>.Factory.StartNew(() => GetHosts());
             await task;
-
+            //
             hostsComboBox.Items.Clear();
             hostsComboBox.FontStyle = FontStyles.Normal;
-
             hostsComboBox.ItemsSource = task.Result;
             hostsComboBox.DisplayMemberPath = "Caption";
             hostsComboBox.SelectedIndex = 0;
@@ -91,6 +86,7 @@ namespace AppMonitorWPF
             //
             var task = Task<WCF_Services.dbUser[]>.Factory.StartNew(() => GetUsers(host));
             await task;
+            //
             usersComboBox.Items.Clear();
             usersComboBox.FontStyle = FontStyles.Normal;
             usersComboBox.ItemsSource = task.Result;
@@ -125,30 +121,29 @@ namespace AppMonitorWPF
             await task;
             var result = task.Result;
             //-----------------------------------------------------------------
-            long totalTime = 0;
-
-            long tk = 0;
+            long workingTicksAll = 0;
+            long workingTicksApp = 0;
+            //
             string timeFormatter = @"hh\:mm\:ss";
             string workingTime = "";
             chartList.Clear();
-
+            //
             var apps = srv.GetApplications("", "").ToList();
             foreach (WCF_Services.dbApplication app in apps)
             {
                 var evsPerApp = result.FindAll(x => x.AppTitle == app.Caption);
                 //
-                tk = 0;
+                workingTicksApp = 0;
                 foreach (WCF_Services.dbEvent ev in evsPerApp)
                 {
-                    totalTime = totalTime + (long)ev.WorkingTime;
-
-                    tk = tk + (long)ev.WorkingTime;
+                    workingTicksAll += (long)ev.WorkingTime;
+                    workingTicksApp += (long)ev.WorkingTime;
                 }
-                TimeSpan ts = TimeSpan.FromTicks(tk);
+                TimeSpan ts = TimeSpan.FromTicks(workingTicksApp);
                 workingTime = ts.ToString(timeFormatter);
                 double minLimit = Convert.ToInt32(AppMonitorWPF.Properties.Settings.Default.MinTimeLimit);
                 //
-                if (tk != 0)
+                if (workingTicksApp != 0)
                 {
                     if (ts.TotalSeconds >= minLimit)
                     {
@@ -157,7 +152,7 @@ namespace AppMonitorWPF
                         ri.EventDate = date;
                         ri.ApplicationTitle = app.Caption;
                         ri.WorkingTime = workingTime;
-                        ri.WorkingTicks = tk;
+                        ri.WorkingTicks = workingTicksApp;
                         //
                         if (IsHidden(app.Caption) == false)
                         {
@@ -166,11 +161,9 @@ namespace AppMonitorWPF
                     }
                 }
             }
-
-            TimeSpan ts2 = TimeSpan.FromTicks(totalTime);
-
-            label1.Content = ts2.ToString(timeFormatter);
-
+            //
+            TimeSpan totalTimeSpan = TimeSpan.FromTicks(workingTicksAll);
+            label1.Content = "Time of all apps: " + totalTimeSpan.ToString(timeFormatter);
             //
             reportListView.Items.Clear();
             //var ccc = new List<KeyValuePair<string, long>>();
@@ -206,18 +199,9 @@ namespace AppMonitorWPF
                 {
                     if (happ.ToLower().Contains('*'))
                     {
-                        if (happ.StartsWith("*") == true && happ.EndsWith("*") == true)
-                        {
-                            r = app.ToLower().Contains(happ.ToLower().Replace("*", ""));
-                        }
-                        if (happ.StartsWith("*") == true && happ.EndsWith("*") == false)
-                        {
-                            r = app.ToLower().EndsWith(happ.ToLower().Replace("*", ""));
-                        }
-                        if (happ.StartsWith("*") == false && happ.EndsWith("*") == true)
-                        {
-                            r = app.ToLower().StartsWith(happ.ToLower().Replace("*", ""));
-                        }
+                        if (happ[0] == '*' && happ[happ.Length - 1] == '*') { r = app.ToLower().Contains(happ.ToLower().Replace("*", "")); }
+                        if (happ[0] == '*' && happ[happ.Length - 1] != '*') { r = app.ToLower().EndsWith(happ.ToLower().Replace("*", "")); }
+                        if (happ[0] != '*' && happ[happ.Length - 1] == '*') { r = app.ToLower().StartsWith(happ.ToLower().Replace("*", "")); }
                     }
                     else
                     {
@@ -225,15 +209,17 @@ namespace AppMonitorWPF
                     }
                 }
             }
+            //
             return r;
         }
 
         private void FillChart()
         {
             var source = new List<KeyValuePair<string, long>>();
-            foreach (ReportItem r in chartList.Where(x => x.ShowInChart == true))
+            foreach (ReportItem reportItem in chartList.Where(x => x.ShowInChart == true))
             {
-                source.Add(new KeyValuePair<string, long>(r.ApplicationTitle, r.WorkingTicks));
+                source.Add(new KeyValuePair<string, long>
+                    (reportItem.ApplicationTitle, reportItem.WorkingTicks));
             }
             ((PieSeries)mcChart.Series[0]).ItemsSource = source;
         }
@@ -247,9 +233,9 @@ namespace AppMonitorWPF
 
         private void eventsGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            WCF_Services.dbEvent ee = (WCF_Services.dbEvent)eventsGrid.SelectedItem;
-            long tk = (long)ee.WorkingTime;
-            TimeSpan ts = TimeSpan.FromTicks(tk);
+            var selectedEvent = (WCF_Services.dbEvent)eventsGrid.SelectedItem;
+            long workingTimeTicks = (long)selectedEvent.WorkingTime;
+            var workingTimeSpan = TimeSpan.FromTicks(workingTimeTicks);
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -267,7 +253,5 @@ namespace AppMonitorWPF
             winOptions wo = new winOptions();
             wo.ShowDialog();
         }
-
-
     }
 }
