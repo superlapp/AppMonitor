@@ -22,7 +22,7 @@ namespace AppMonitor
             hwnd = GetForegroundWindow();
             uint pid;
             GetWindowThreadProcessId(hwnd, out pid);
-            Process p = Process.GetProcessById((int)pid);
+            var p = Process.GetProcessById((int)pid);
             //
             ai = new AppInfo();
             if (p.Id == 0)
@@ -32,6 +32,7 @@ namespace AppMonitor
             else
             {
                 ai.Id = p.Id;
+                //
                 ai.AppPath = p.MainModule.FileName;
                 ai.AppTitle = (p.MainModule.FileVersionInfo.FileDescription == null) ? p.ProcessName : p.MainModule.FileVersionInfo.FileDescription;
             }
