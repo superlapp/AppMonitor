@@ -36,7 +36,7 @@ namespace AppMonitorWPF
             usersComboBox.Items.Add("Loading...");
             usersComboBox.SelectedIndex = 0;
             //
-            GetHostsAsync();            
+            GetHostsAsync();
             eventDatePicker.SelectedDate = DateTime.Today;
         }
         //---------------------------------------------------------------------
@@ -44,6 +44,8 @@ namespace AppMonitorWPF
         //---------------------------------------------------------------------
         private async void GetHostsAsync()
         {
+            getEventsBtn.IsEnabled = false;
+            //
             var task = Task<WCF_Services.dbHost[]>.Factory.StartNew(() => GetHosts());
             await task;
             //
@@ -54,6 +56,8 @@ namespace AppMonitorWPF
             hostsComboBox.SelectedIndex = 0;
             //
             GetUsersAsync();
+            //
+            getEventsBtn.IsEnabled = true;
         }
 
         private WCF_Services.dbHost[] GetHosts()
